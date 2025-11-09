@@ -109,13 +109,11 @@ yt-audio "URL"  # Extract audio as MP3
 TheSecretJuice/
 ├── README.md                 # This file
 ├── LICENSE                   # MIT License
-├── yt-dlp.ps1               # yt-dlp interactive wrapper
-├── fzf-enhance.ps1          # Coming soon
-├── readline-enhance.ps1     # Coming soon
-├── zoxide-enhance.ps1       # Coming soon
+├── nav-enhance.ps1           # Navigation enhancement script
+├── yt-dlp.ps1                # yt-dlp interactive wrapper
 └── docs/
-    ├── yt-dlp.md            # Detailed yt-dlp documentation
-    └── ...                   # More docs
+    ├── nav-enhance.md        # Detailed nav-enhance documentation
+    └── yt-dlp.md             # Detailed yt-dlp documentation
 ```
 
 ## 🎨 Design Philosophy
@@ -132,7 +130,15 @@ Every enhancement follows these principles:
 ## 📝 Tool-Specific Documentation
 
 - [yt-dlp Enhancement](docs/yt-dlp.md) - Video/audio downloader with interactive menus
+- [nav-enhance Enhancement](docs/nav-enhance.md) - Navigation enhancement script
 - More coming soon...
+
+## Documentation
+
+The documentation is located in the `docs` folder.
+
+- [nav-enhance Overview](docs/nav-enhance.md)
+- [yt-dlp Overview](docs/yt-dlp.md)
 
 ## ❓ Troubleshooting
 
