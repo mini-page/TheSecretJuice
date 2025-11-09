@@ -1,2 +1,5 @@
 # Ignore Genkit directory
 .genkit/
+
+# ignore all .log files
+*.log
