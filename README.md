@@ -129,7 +129,7 @@ Every enhancement follows these principles:
 
 ## 📝 Tool-Specific Documentation
 
-- [yt-dlp Enhancement](docs/yt-dlp.md) - Video/audio downloader with interactive menus
+- [yt-dlp Enhancement](docs/yt-dlp-enhance.md) - Video/audio downloader with interactive menus
 - [nav-enhance Enhancement](docs/nav-enhance.md) - Navigation enhancement script
 - More coming soon...
 
@@ -138,7 +138,7 @@ Every enhancement follows these principles:
 The documentation is located in the `docs` folder.
 
 - [nav-enhance Overview](docs/nav-enhance.md)
-- [yt-dlp Overview](docs/yt-dlp.md)
+- [yt-dlp Overview](docs/yt-dlp-enhance.md)
 
 ## ❓ Troubleshooting
 
@@ -202,9 +202,9 @@ function tool-shortcut { ... }
 
 Vote for what you want next by opening an issue!
 
-- [ ] **fzf** - Fuzzy finder with presets
+- [ ☑ ] **fzf** - Fuzzy finder with presets
 - [ ] **PSReadLine** - Enhanced editing
-- [ ] **zoxide** - Smart directory jumper
+- [☑ ] **zoxide** - Smart directory jumper
 - [ ] **ripgrep** - Interactive search
 - [ ] **bat** - Enhanced file viewer
 - [ ] **fd** - Interactive file finder
