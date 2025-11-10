@@ -3,3 +3,6 @@
 
 # ignore all .log files
 *.log
+
+# ignore all .json settings
+*.json
