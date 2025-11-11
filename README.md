@@ -2,228 +2,182 @@
 
 **PowerShell steroids for your favorite command-line tools**
 
-Transform boring CLI tools into interactive, colorful, user-friendly experiences. Because command-line tools deserve better UX.
+Transform boring CLI tools into interactive, colorful, user-friendly experiences.
 
 ![PowerShell](https://img.shields.io/badge/PowerShell-5.1%2B-blue)
 ![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-green)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
-## 🎯 What is This?
+## ✨ What You Get
 
-Command-line tools are powerful but often cryptic. **TheSecretJuice** wraps them with:
-- 🎨 **Interactive menus** - No more memorizing flags
-- 🌈 **Colorful interfaces** - Visual clarity with emojis
-- 🛡️ **Smart error handling** - Auto-create directories, validate inputs
-- 🚀 **Quick aliases** - Shortcuts for common tasks
-- 📝 **Custom workflows** - Build on top of existing tools
+- 🎨 **Interactive menus** - No more memorizing cryptic flags
+- 🍪 **Smart features** - Cookie support, download archives, error detection
+- 🎯 **Quick aliases** - One-line commands for common tasks
+- 💾 **Settings memory** - Save your preferences, skip repetitive prompts
+- 🌈 **Beautiful UI** - Colorful, emoji-rich interfaces
 
-## 📦 Available Enhancements
+## 🚀 Quick Install
 
-| Tool | Script | Status | Description |
-|------|--------|--------|-------------|
-| **yt-dlp** | `yt-dlp.ps1` | ✅ Ready | Interactive video/audio downloader with quality selection, playlists, subtitles |
-| **fzf** | `fzf-enhance.ps1` | 🚧 Coming Soon | Fuzzy finder with preset workflows |
-| **PSReadLine** | `readline-enhance.ps1` | 🚧 Coming Soon | Enhanced command-line editing experience |
-| **zoxide** | `zoxide-enhance.ps1` | 🚧 Coming Soon | Smart directory jumping with interactive selection |
-| More... | - | 💡 Planned | Suggest your favorite CLI tool! |
+**One command to rule them all:**
 
-## 🚀 Quick Start
-
-### Prerequisites
-- **PowerShell 5.1+** (Windows) or **PowerShell Core 7+** (Linux/macOS)
-- The original CLI tools you want to enhance (e.g., yt-dlp, fzf, etc.)
-
-### Installation
-
-#### Option 1: One-Line Install (Recommended)
 ```powershell
-# Download all scripts
-$scriptsPath = "$env:USERPROFILE\Documents\PowerShell\Scripts\TheSecretJuice"
-New-Item -ItemType Directory -Path $scriptsPath -Force
-Invoke-WebRequest -Uri "https://github.com/mini-page/TheSecretJuice/archive/refs/heads/main.zip" -OutFile "$env:TEMP\TheSecretJuice.zip"
-Expand-Archive -Path "$env:TEMP\TheSecretJuice.zip" -DestinationPath "$scriptsPath" -Force
+iwr https://raw.githubusercontent.com/mini-page/TheSecretJuice/main/install.ps1 | iex
 ```
 
-#### Option 2: Git Clone
+Then reload your profile:
+```powershell
+. $PROFILE
+```
+
+Done! 🎉
+
+## 📦 Available Tools
+
+| Tool | Commands | What it does |
+|------|----------|--------------|
+| **[yt-dlp-enhance](docs/yt-dlp-enhance.md)** | `yt-dlp` `yt-video` `yt-audio` | Download videos/audio with menus, cookies, archives |
+| **[nav-enhance](docs/nav-enhance.md)** | `zi` `zz` `bm` `ll` `la` | Smart navigation with zoxide + eza, bookmarks |
+| **fzf-enhance** | Coming soon | Fuzzy finder with presets |
+| **More...** | 💡 Suggest! | What CLI tool needs juice? |
+
+## 💡 Quick Examples
+
+### Download YouTube Videos
+```powershell
+yt-dlp                    # Interactive mode
+yt-video "URL"            # Quick best quality
+yt-audio "URL"            # Extract MP3
+yt-cookies "URL" chrome   # Use browser cookies (bypass blocks)
+```
+
+### Smart Navigation
+```powershell
+zi                        # Interactive fuzzy jump
+zz projects               # Jump to directory
+bm-add work              # Bookmark current location
+bm work                  # Jump to bookmark
+ll                       # Enhanced listing
+```
+
+## 📖 Full Documentation
+
+Each tool has detailed docs with examples and troubleshooting:
+
+- **[yt-dlp-enhance](docs/yt-dlp-enhance.md)** - Cookies, playlists, VLC streaming, archives
+- **[nav-enhance](docs/nav-enhance.md)** - Navigation, bookmarks, listings, stats
+
+## 🎯 Why TheSecretJuice?
+
+**Before:**
+```powershell
+yt-dlp --cookies-from-browser chrome --user-agent "Mozilla..." -f "bestvideo[ext=mp4]+bestaudio" --download-archive archive.txt -o "~/Downloads/%(title)s.%(ext)s" "URL"
+```
+
+**After:**
+```powershell
+yt-dlp "URL"  # Interactive prompts guide you
+```
+
+Or even simpler:
+```powershell
+yt-video "URL"  # One command, done!
+```
+
+## ⚡ Features Highlights
+
+### yt-dlp-enhance
+- 🍪 Browser cookie extraction (Chrome/Firefox/Edge)
+- 📚 Download archive (skip already downloaded)
+- 🎮 Stream to VLC player
+- 🌐 User-agent spoofing (fix 403 errors)
+- 💾 Remember settings (no repetitive prompts)
+- 🛡️ Smart error detection with fix suggestions
+
+### nav-enhance
+- 🔍 Interactive fuzzy search (`zi`)
+- 📚 Bookmark system (`bm-add`, `bm`)
+- 🎨 Enhanced listings (`ll`, `la`, `lt`, `lz`)
+- 📊 Directory stats (`lst`)
+- 🚀 Quick aliases (`.`, `..`, `...`)
+- 🔧 VSCode/Explorer integration (`zc`, `ze`)
+
+## 🛠️ Manual Installation
+
+<details>
+<summary>Click to expand manual installation steps</summary>
+
+### Git Clone
 ```bash
-# Clone the repository
 git clone https://github.com/mini-page/TheSecretJuice.git
-
-# For Windows
-$scriptsPath = "$env:USERPROFILE\Documents\PowerShell\Scripts"
-Copy-Item -Path ".\TheSecretJuice\*" -Destination "$scriptsPath\TheSecretJuice\" -Recurse
-
-# For Linux/macOS
-mkdir -p ~/.config/powershell/Scripts
-cp -r ./TheSecretJuice/* ~/.config/powershell/Scripts/TheSecretJuice/
+cd TheSecretJuice
 ```
 
-### Add to PowerShell Profile
-
+### Windows
 ```powershell
-# Open your profile
-if (!(Test-Path $PROFILE)) { New-Item -Path $PROFILE -ItemType File -Force }
+$dest = "$env:USERPROFILE\Documents\PowerShell\Scripts\TheSecretJuice"
+Copy-Item -Path ".\*" -Destination $dest -Recurse
+```
+
+### Linux/macOS
+```bash
+mkdir -p ~/.config/powershell/Scripts/TheSecretJuice
+cp -r ./* ~/.config/powershell/Scripts/TheSecretJuice/
+```
+
+### Add to Profile
+```powershell
+# Edit profile
 notepad $PROFILE  # Windows
-# or: nano $PROFILE  # Linux/macOS
+nano $PROFILE     # Linux/macOS
+
+# Add these lines:
+$juicePath = "$env:USERPROFILE\Documents\PowerShell\Scripts\TheSecretJuice"
+. "$juicePath\yt-dlp-enhance.ps1"
+. "$juicePath\nav-enhance.ps1"
 ```
 
-Add these lines to load all enhancements:
+</details>
+
+## 📋 Requirements
+
+### PowerShell
+- **Windows:** PowerShell 5.1+ (built-in)
+- **Linux/macOS:** [PowerShell Core 7+](https://github.com/PowerShell/PowerShell)
+
+### Optional CLI Tools
+- **[yt-dlp](https://github.com/yt-dlp/yt-dlp)** - For video downloads
+- **[eza](https://github.com/eza-community/eza)** - For enhanced listings
+- **[zoxide](https://github.com/ajeetdsouza/zoxide)** - For smart navigation
+- **[fzf](https://github.com/junegunn/fzf)** - For fuzzy finding
+
+The installer will check for these and provide download links.
+
+## ❓ Quick Help
 
 ```powershell
-# TheSecretJuice - CLI Tool Enhancements
-$juicePath = "$env:USERPROFILE\Documents\PowerShell\Scripts\TheSecretJuice"  # Windows
-# $juicePath = "$HOME/.config/powershell/Scripts/TheSecretJuice"  # Linux/macOS
-
-# Load individual enhancements
-. "$juicePath\yt-dlp.ps1"
-# . "$juicePath\fzf-enhance.ps1"      # Uncomment when available
-# . "$juicePath\readline-enhance.ps1"
-# . "$juicePath\zoxide-enhance.ps1"
-```
-
-Reload your profile:
-```powershell
-. $PROFILE
-```
-
-## 📖 Usage Examples
-
-### yt-dlp Enhancement
-```powershell
-# Interactive mode - just run it
-yt-dlp
-
-# Or with URL
-yt-dlp "https://youtube.com/watch?v=..."
-
-# Quick aliases
-yt-video "URL"  # Best quality video
-yt-audio "URL"  # Extract audio as MP3
-```
-
-### More tools coming soon...
-
-## 🛠️ Repository Structure
-
-```
-TheSecretJuice/
-├── README.md                 # This file
-├── LICENSE                   # MIT License
-├── nav-enhance.ps1           # Navigation enhancement script
-├── yt-dlp.ps1                # yt-dlp interactive wrapper
-└── docs/
-    ├── nav-enhance.md        # Detailed nav-enhance documentation
-    └── yt-dlp.md             # Detailed yt-dlp documentation
-```
-
-## 🎨 Design Philosophy
-
-Every enhancement follows these principles:
-
-1. **Non-Intrusive** - Original tool functionality stays intact
-2. **Progressive Enhancement** - Basic usage stays simple, advanced features available
-3. **Visual Clarity** - Colors, emojis, and formatting for better UX
-4. **Cross-Platform** - Works on Windows, Linux, and macOS
-5. **Zero Dependencies** - Only requires PowerShell and the original tool
-6. **Lightweight** - Fast loading, minimal overhead
-
-## 📝 Tool-Specific Documentation
-
-- [yt-dlp Enhancement](docs/yt-dlp-enhance.md) - Video/audio downloader with interactive menus
-- [nav-enhance Enhancement](docs/nav-enhance.md) - Navigation enhancement script
-- More coming soon...
-
-## Documentation
-
-The documentation is located in the `docs` folder.
-
-- [nav-enhance Overview](docs/nav-enhance.md)
-- [yt-dlp Overview](docs/yt-dlp-enhance.md)
-
-## ❓ Troubleshooting
-
-### Scripts not loading
-```powershell
-# Check execution policy
-Get-ExecutionPolicy
-
-# Set to RemoteSigned if needed (run as Administrator)
-Set-ExecutionPolicy RemoteSigned -Scope CurrentUser
-```
-
-### Functions not available after installation
-```powershell
-# Reload profile
-. $PROFILE
-
-# Or restart PowerShell
-```
-
-### Path issues on Linux/macOS
-Update the `$juicePath` variable in your profile to use `$HOME` instead of `$env:USERPROFILE`:
-```powershell
-$juicePath = "$HOME/.config/powershell/Scripts/TheSecretJuice"
+yt-help        # Show yt-dlp commands
+nav-help       # Show navigation commands
+yt-reset-settings  # Clear saved settings
 ```
 
 ## 🤝 Contributing
 
-Got a CLI tool that needs the juice? Contributions welcome!
+Got a CLI tool that needs steroids? [Open an issue](https://github.com/mini-page/TheSecretJuice/issues) or submit a PR!
 
-### Adding a New Enhancement
-
-1. Fork the repository
-2. Create your enhancement script: `tool-name.ps1`
-3. Follow the design philosophy
-4. Add documentation: `docs/tool-name.md`
-5. Update this README
-6. Submit a Pull Request
-
-### Enhancement Template
-```powershell
-# tool-name.ps1
-# Description of what this enhances
-
-function tool-name {
-    param([string]$args)
-    
-    # Banner
-    Write-Host "Your Tool Enhancement" -ForegroundColor Cyan
-    
-    # Interactive menu
-    # Error handling
-    # Execute original tool
-}
-
-# Quick aliases (optional)
-function tool-shortcut { ... }
-```
-
-## 💡 Planned Enhancements
-
-Vote for what you want next by opening an issue!
-
-- [ ☑ ] **fzf** - Fuzzy finder with presets
-- [ ] **PSReadLine** - Enhanced editing
-- [☑ ] **zoxide** - Smart directory jumper
-- [ ] **ripgrep** - Interactive search
-- [ ] **bat** - Enhanced file viewer
-- [ ] **fd** - Interactive file finder
-- [ ] Your suggestion here!
+**Template:** Check [CONTRIBUTING.md](CONTRIBUTING.md) for the enhancement template.
 
 ## 📜 License
 
-MIT License - Use it, modify it, share it!
+MIT License - Free to use, modify, and share!
 
-## 🙏 Acknowledgments
-
-Thanks to all the amazing CLI tool developers who make our terminal lives better. This project just adds some sugar on top.
-
-## 📞 Support
+## 💬 Support
 
 - 🐛 [Report Issues](https://github.com/mini-page/TheSecretJuice/issues)
-- 💬 [Discussions](https://github.com/mini-page/TheSecretJuice/discussions)
+- 💡 [Request Features](https://github.com/mini-page/TheSecretJuice/discussions)
 - ⭐ Star if you find it useful!
 
 ---
 
-**Making command-line tools feel like 2030** 💉✨
+**Making CLI tools feel like 2030** 💉✨
+
+*Built with ❤️ by [mini-page](https://github.com/mini-page)*
