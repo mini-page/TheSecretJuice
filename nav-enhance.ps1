@@ -180,7 +180,7 @@ function fn {
     param([string]$pattern)
     
     if (-not $pattern) {
-        Write-Host "Usage: fn <search-pattern>" -ForegroundColor Yellow
+        Write-Host "Usage: fn [search-pattern]" -ForegroundColor Yellow
         return
     }
     
@@ -207,7 +207,7 @@ function lgrep {
     param([string]$pattern)
     
     if (-not $pattern) {
-        Write-Host "Usage: lgrep <search-pattern>" -ForegroundColor Yellow
+        Write-Host "Usage: lgrep [search-pattern]" -ForegroundColor Yellow
         return
     }
     
@@ -237,8 +237,8 @@ function bm-add {
     
     $bookmarks[$name] = (Get-Location).Path
     $bookmarks | ConvertTo-Json | Out-File $bookmarksFile
-    Write-Host "✓ Bookmarked: " -ForegroundColor Green -NoNewline
-    Write-Host "$name → $($bookmarks[$name])" -ForegroundColor Cyan
+    Write-Host "OK. Bookmarked: " -ForegroundColor Green -NoNewline
+    Write-Host "$name -> $($bookmarks[$name])" -ForegroundColor Cyan
 }
 
 # Jump to bookmark
@@ -246,7 +246,7 @@ function bm {
     param([string]$name)
     
     if (-not (Test-Path $bookmarksFile)) {
-        Write-Host "No bookmarks yet. Use 'bm-add <name>' to create one." -ForegroundColor Yellow
+        Write-Host "No bookmarks yet. Use 'bm-add [name]' to create one." -ForegroundColor Yellow
         return
     }
     
@@ -275,10 +275,10 @@ function bm-list {
     }
     
     $bookmarks = Get-Content $bookmarksFile | ConvertFrom-Json -AsHashtable
-    Write-Host "`n📚 Bookmarks:" -ForegroundColor Cyan
+    Write-Host "`nBookmarks:" -ForegroundColor Cyan
     $bookmarks.GetEnumerator() | ForEach-Object {
         Write-Host "  $($_.Key) " -ForegroundColor Green -NoNewline
-        Write-Host "→ $($_.Value)" -ForegroundColor Gray
+        Write-Host "-> $($_.Value)" -ForegroundColor Gray
     }
     Write-Host ""
 }
@@ -297,7 +297,7 @@ function bm-rm {
     if ($bookmarks.ContainsKey($name)) {
         $bookmarks.Remove($name)
         $bookmarks | ConvertTo-Json | Out-File $bookmarksFile
-        Write-Host "✓ Removed bookmark: $name" -ForegroundColor Green
+        Write-Host "OK. Removed bookmark: $name" -ForegroundColor Green
     } else {
         Write-Host "Bookmark '$name' not found." -ForegroundColor Red
     }
@@ -314,7 +314,7 @@ function lst {
     $dirs = Get-ChildItem -Directory -Recurse -ErrorAction SilentlyContinue
     $size = ($files | Measure-Object -Property Length -Sum).Sum
     
-    Write-Host "`n📊 Directory Stats:" -ForegroundColor Cyan
+    Write-Host "`nDirectory Stats:" -ForegroundColor Cyan
     Write-Host "  Path: " -NoNewline -ForegroundColor Gray
     Write-Host "$path" -ForegroundColor White
     Write-Host "  Files: " -NoNewline -ForegroundColor Gray
@@ -322,7 +322,8 @@ function lst {
     Write-Host "  Directories: " -NoNewline -ForegroundColor Gray
     Write-Host "$($dirs.Count)" -ForegroundColor Green
     Write-Host "  Total Size: " -NoNewline -ForegroundColor Gray
-    Write-Host "$([math]::Round($size/1MB, 2)) MB`n" -ForegroundColor Yellow
+    Write-Host "$([math]::Round($size/1MB, 2)) MB" -ForegroundColor Yellow
+    Write-Host ""
 }
 
 # ============================================================================
@@ -330,18 +331,18 @@ function lst {
 # ============================================================================
 
 function nav-help {
-    Write-Host "`n🧭 NAV-ENHANCE COMMANDS" -ForegroundColor Magenta
+    Write-Host "`nNAV-ENHANCE COMMANDS" -ForegroundColor Magenta
     Write-Host "════════════════════════════════════════════`n" -ForegroundColor DarkGray
     
     Write-Host "NAVIGATION:" -ForegroundColor Cyan
-    Write-Host "  zz <query>    " -NoNewline -ForegroundColor Green; Write-Host "Jump to directory and list" -ForegroundColor Gray
+    Write-Host "  zz [query]    " -NoNewline -ForegroundColor Green; Write-Host "Jump to directory and list" -ForegroundColor Gray
     Write-Host "  zi            " -NoNewline -ForegroundColor Green; Write-Host "Interactive fuzzy jump with preview" -ForegroundColor Gray
-    Write-Host "  zc <query>    " -NoNewline -ForegroundColor Green; Write-Host "Jump and open in VSCode" -ForegroundColor Gray
-    Write-Host "  ze <query>    " -NoNewline -ForegroundColor Green; Write-Host "Jump and open in Explorer" -ForegroundColor Gray
+    Write-Host "  zc [query]    " -NoNewline -ForegroundColor Green; Write-Host "Jump and open in VSCode" -ForegroundColor Gray
+    Write-Host "  ze [query]    " -NoNewline -ForegroundColor Green; Write-Host "Jump and open in Explorer" -ForegroundColor Gray
     Write-Host "  zn            " -NoNewline -ForegroundColor Green; Write-Host "Show numbered list, pick to jump" -ForegroundColor Gray
     Write-Host "  zx            " -NoNewline -ForegroundColor Green; Write-Host "Jump with action menu" -ForegroundColor Gray
     Write-Host "  z-            " -NoNewline -ForegroundColor Green; Write-Host "Go back to previous directory" -ForegroundColor Gray
-    Write-Host "  .. / ... / ..." -NoNewline -ForegroundColor Green; Write-Host " Navigate up 1/2/3 levels" -ForegroundColor Gray
+    Write-Host "  .. / ... / .... " -NoNewline -ForegroundColor Green; Write-Host " Navigate up 1/2/3 levels" -ForegroundColor Gray
     
     Write-Host "`nLISTING:" -ForegroundColor Cyan
     Write-Host "  lb            " -NoNewline -ForegroundColor Green; Write-Host "Basic list with icons" -ForegroundColor Gray
@@ -369,11 +370,11 @@ function nav-help {
     Write-Host "  bm-add [name] " -NoNewline -ForegroundColor Green; Write-Host "Bookmark current directory" -ForegroundColor Gray
     Write-Host "  bm [name]     " -NoNewline -ForegroundColor Green; Write-Host "Jump to bookmark" -ForegroundColor Gray
     Write-Host "  bm-list       " -NoNewline -ForegroundColor Green; Write-Host "Show all bookmarks" -ForegroundColor Gray
-    Write-Host "  bm-rm <name>  " -NoNewline -ForegroundColor Green; Write-Host "Remove bookmark" -ForegroundColor Gray
+    Write-Host "  bm-rm [name]  " -NoNewline -ForegroundColor Green; Write-Host "Remove bookmark" -ForegroundColor Gray
     
     Write-Host "`nUTILITIES:" -ForegroundColor Cyan
     Write-Host "  pj [path]     " -NoNewline -ForegroundColor Green; Write-Host "Find git projects" -ForegroundColor Gray
-    Write-Host "  fn <pattern>  " -NoNewline -ForegroundColor Green; Write-Host "Find and navigate to folder" -ForegroundColor Gray
+    Write-Host "  fn [pattern]  " -NoNewline -ForegroundColor Green; Write-Host "Find and navigate to folder" -ForegroundColor Gray
     Write-Host "  lst           " -NoNewline -ForegroundColor Green; Write-Host "Show directory statistics" -ForegroundColor Gray
     Write-Host "  lg            " -NoNewline -ForegroundColor Green; Write-Host "Git-focused view" -ForegroundColor Gray
     
@@ -382,5 +383,5 @@ function nav-help {
 }
 
 # Show welcome message on load
-Write-Host "✓ nav-enhance loaded! " -ForegroundColor Green -NoNewline
+Write-Host "OK. nav-enhance loaded! " -ForegroundColor Green -NoNewline
 Write-Host "Type 'nav-help' for commands" -ForegroundColor Cyan
