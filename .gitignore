@@ -6,3 +6,6 @@
 
 # ignore all .json settings
 *.json
+
+# ignore all .qodo settings
+*.qodo
