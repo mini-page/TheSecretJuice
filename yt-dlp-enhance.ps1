@@ -48,7 +48,7 @@ function yt-dlp {
         Write-Host "   1. Use saved settings" -ForegroundColor White
         Write-Host "   2. Configure new settings" -ForegroundColor White
         Write-Host "   3. Use defaults (skip all)" -ForegroundColor White
-        $settingChoice = Read-Host "   Choice (1-3, default: 1)"
+        $settingChoice = Read-Host "   Choice (1-3) [1]"
         
         if ($settingChoice -eq "3") {
             $useDefaults = $true
@@ -193,7 +193,7 @@ function yt-dlp {
         Write-Host "   OK. Using: $downloadPath`n" -ForegroundColor Green
     }
     
-    # --- Cookie & Authentication Setup ---
+    # --- Cookie and Authentication Setup ---
     $cookieArgs = ""
     
     if ($useDefaults) {
@@ -212,14 +212,14 @@ function yt-dlp {
         }
     }
     else {
-        Write-Host "Cookie & Authentication (for blocked/private content)" -ForegroundColor Cyan
+        Write-Host "Cookie and Authentication (for blocked/private content)" -ForegroundColor Cyan
         Write-Host "   1. No cookies (default)" -ForegroundColor White
         Write-Host "   2. Use browser cookies (Chrome)" -ForegroundColor White
         Write-Host "   3. Use browser cookies (Firefox)" -ForegroundColor White
         Write-Host "   4. Use browser cookies (Edge)" -ForegroundColor White
         Write-Host "   5. Use cookie file" -ForegroundColor White
         Write-Host "   6. Export cookies from browser to file" -ForegroundColor White
-        $cookieChoice = Read-Host "   Choice (1-6, default: 1)"
+        $cookieChoice = Read-Host "   Choice (1-6) [1]"
         
         $currentSettings.cookieChoice = $cookieChoice
         
@@ -306,7 +306,7 @@ function yt-dlp {
         Write-Host "   2. Chrome (recommended)" -ForegroundColor White
         Write-Host "   3. Firefox" -ForegroundColor White
         Write-Host "   4. Custom" -ForegroundColor White
-        $uaChoice = Read-Host "   Choice (1-4, default: 1)"
+        $uaChoice = Read-Host "   Choice (1-4) [1]"
         
         $currentSettings.userAgentChoice = $uaChoice
         
@@ -354,7 +354,7 @@ function yt-dlp {
         Write-Host "Download Archive (track downloaded videos)" -ForegroundColor Cyan
         Write-Host "   1. No archive (download everything)" -ForegroundColor White
         Write-Host "   2. Use archive (skip already downloaded)" -ForegroundColor White
-        $archiveChoice = Read-Host "   Choice (1-2, default: 1)"
+        $archiveChoice = Read-Host "   Choice (1-2) [1]"
         
         $currentSettings.archiveChoice = $archiveChoice
         
@@ -381,7 +381,7 @@ function yt-dlp {
     Write-Host "File Naming" -ForegroundColor Cyan
     Write-Host "   1. Auto (use video title)" -ForegroundColor White
     Write-Host "   2. Custom name" -ForegroundColor White
-    $nameChoice = Read-Host "   Choice (1-2, default: 1)"
+    $nameChoice = Read-Host "   Choice (1-2) [1]"
     
     $outputTemplate = "%(title)s.%(ext)s"
     if ($nameChoice -eq "2") {
