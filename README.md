@@ -37,6 +37,7 @@ Done! 🎉
 |------|----------|--------------|
 | **[yt-dlp-enhance](docs/yt-dlp-enhance.md)** | `yt-dlp` `yt-video` `yt-audio` | Download videos/audio with menus, cookies, archives |
 | **[nav-enhance](docs/nav-enhance.md)** | `zi` `zz` `bm` `ll` `la` | Smart navigation with zoxide + eza, bookmarks |
+| **[robocopy-enhance](docs/robocopy-enhance.md)** | `robocopy` `robo-mirror` `robo-backup` | Smart file copying with presets, logging, scheduling |
 | **fzf-enhance** | Coming soon | Fuzzy finder with presets |
 | **More...** | 💡 Suggest! | What CLI tool needs juice? |
 
@@ -59,12 +60,21 @@ bm work                  # Jump to bookmark
 ll                       # Enhanced listing
 ```
 
+### File Operations
+```powershell
+robocopy                 # Interactive file copying
+robo-mirror C:\Src D:\Dst # Mirror sync
+robo-backup C:\Src D:\Dst # Backup with smart skip
+robo-diff C:\A C:\B      # Compare directories
+robo-schedule C:\Src D:\Dst # Schedule backup
+```
+
 ## 📖 Full Documentation
 
 Each tool has detailed docs with examples and troubleshooting:
 
 - **[yt-dlp-enhance](docs/yt-dlp-enhance.md)** - Cookies, playlists, VLC streaming, archives
-- **[nav-enhance](docs/nav-enhance.md)** - Navigation, bookmarks, listings, stats
+**[robocopy-enhance](docs/robocopy-enhance.md)** - Presets, logging, scheduling, watch mode, exclusions
 
 ## 🎯 Why TheSecretJuice?
 
@@ -100,6 +110,16 @@ yt-video "URL"  # One command, done!
 - 📊 Directory stats (`lst`)
 - 🚀 Quick aliases (`.`, `..`, `...`)
 - 🔧 VSCode/Explorer integration (`zc`, `ze`)
+
+### robocopy-enhance
+- 🎯 Smart presets (Mirror, Sync, Backup, Fast, Verify)
+- 📝 Automatic logging with timestamps
+- 🚫 Pre-built exclusion filters (dev folders, system files)
+- 💾 Settings memory (save preferences)
+- 📊 Directory statistics and comparison
+- ⏰ Scheduled backup tasks
+- 👁️ Watch mode for continuous sync
+- 🔐 Proper exit code handling
 
 ## 🛠️ Manual Installation
 

@@ -116,6 +116,7 @@ $profileAddition = @"
 # Load enhancements (uncomment to enable)
 . "`$juicePath\yt-dlp-enhance.ps1"
 . "`$juicePath\nav-enhance.ps1"
+. "`$juicePath\robocopy-enhance.ps1"
 # . "`$juicePath\fzf-enhance.ps1"      # Coming soon
 # . "`$juicePath\readline-enhance.ps1" # Coming soon
 "@
@@ -125,10 +126,12 @@ Write-Host "✓ Added to PowerShell profile" -ForegroundColor Green
 
 # Show available tools
 Write-Host "`n🎯 Installed Enhancements:" -ForegroundColor Cyan
-Write-Host "   ✅ yt-dlp-enhance  " -NoNewline -ForegroundColor Green
+Write-Host "   ✅ yt-dlp-enhance     " -NoNewline -ForegroundColor Green
 Write-Host "- Interactive video/audio downloader" -ForegroundColor Gray
-Write-Host "   ✅ nav-enhance     " -NoNewline -ForegroundColor Green
+Write-Host "   ✅ nav-enhance        " -NoNewline -ForegroundColor Green
 Write-Host "- Enhanced navigation with zoxide + eza" -ForegroundColor Gray
+Write-Host "   ✅ robocopy-enhance   " -NoNewline -ForegroundColor Green
+Write-Host "- Smart file copying with presets" -ForegroundColor Gray
 
 # Check for required tools
 Write-Host "`n🔍 Checking for required tools..." -ForegroundColor Cyan
@@ -173,10 +176,13 @@ Write-Host ""
 Write-Host "   2. Try the enhancements:" -ForegroundColor White
 Write-Host "      " -NoNewline
 Write-Host "yt-help" -ForegroundColor Yellow -NoNewline
-Write-Host "   - Show yt-dlp commands" -ForegroundColor Gray
+Write-Host "    - Show yt-dlp commands" -ForegroundColor Gray
 Write-Host "      " -NoNewline
 Write-Host "nav-help" -ForegroundColor Yellow -NoNewline
-Write-Host "  - Show navigation commands" -ForegroundColor Gray
+Write-Host "   - Show navigation commands" -ForegroundColor Gray
+Write-Host "      " -NoNewline
+Write-Host "robo-help" -ForegroundColor Yellow -NoNewline
+Write-Host "  - Show robocopy commands" -ForegroundColor Gray
 Write-Host ""
 Write-Host "   3. Documentation:" -ForegroundColor White
 Write-Host "      https://github.com/mini-page/TheSecretJuice" -ForegroundColor Cyan
