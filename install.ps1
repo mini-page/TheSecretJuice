@@ -10,10 +10,10 @@ Write-Host "╚═════════════════════�
 # Detect OS and set paths
 $isWindows = $IsWindows -or $env:OS -match "Windows"
 if ($isWindows) {
-    $scriptsPath = "$env:USERPROFILE\Documents\PowerShell\Scripts\TheSecretJuice"
+    $scriptsPath = "$env:USERPROFILE\Documents\PowerShell\Scripts\TheSecretJuice\Steroids"
     $profilePath = $PROFILE
 } else {
-    $scriptsPath = "$HOME/.config/powershell/Scripts/TheSecretJuice"
+    $scriptsPath = "$HOME/.config/powershell/Scripts/TheSecretJuice/Steroids"
     $profilePath = "$HOME/.config/powershell/profile.ps1"
 }
 
