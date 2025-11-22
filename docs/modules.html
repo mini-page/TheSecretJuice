@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Browse all TheSecretJuice enhancement modules - Interactive PowerShell wrappers for CLI tools">
+  <title>Modules - TheSecretJuice</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/scrollbar.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💉</text></svg>">
+</head>
+<body>
+  
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-brand">
+        <span class="navbar-icon">💉</span>
+        <span class="gradient-text">TheSecretJuice</span>
+      </a>
+      <ul class="navbar-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="modules.html" class="active">Modules</a></li>
+        <li><a href="installation.html">Installation</a></li>
+        <li><a href="contribute.html">Contribute</a></li>
+        <li><a href="https://github.com/mini-page/TheSecretJuice" target="_blank">
+          <i class="fab fa-github"></i> GitHub
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+
+
+  <!-- Page Header -->
+  <section style="max-width: 1400px; margin: 0 auto; padding: 4rem 2rem 2rem;">
+    <h1 style="font-size: 3rem; font-weight: 900; margin-bottom: 1rem;">
+      <span class="gradient-text">Enhancement Modules</span>
+    </h1>
+    <p style="color: var(--text-dim); font-size: 1.125rem; max-width: 800px;">
+      Browse all available PowerShell enhancement modules. Each module transforms a CLI tool into an interactive, user-friendly experience.
+    </p>
+  </section>
+
+  <!-- Search & Filter -->
+  <section style="max-width: 1400px; margin: 0 auto; padding: 0 2rem 2rem;">
+    <div class="search-container">
+      <input 
+        type="text" 
+        id="searchInput" 
+        class="search-input" 
+        placeholder="Search modules, commands, or keywords..."
+      >
+      <i class="fas fa-search search-icon"></i>
+    </div>
+  </section>
+
+  <!-- Modules Grid -->
+  <section style="max-width: 1400px; margin: 0 auto; padding: 0 2rem 4rem;">
+    <div id="modulesContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+      <!-- Modules will be loaded here dynamically -->
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="https://github.com/mini-page/TheSecretJuice" target="_blank">
+          <i class="fab fa-github"></i> GitHub
+        </a>
+        <a href="https://github.com/mini-page/TheSecretJuice/issues" target="_blank">
+          <i class="fas fa-bug"></i> Report Issue
+        </a>
+        <a href="contribute.html">
+          <i class="fas fa-heart"></i> Contribute
+        </a>
+        <a href="https://github.com/mini-page" target="_blank">
+          <i class="fas fa-user"></i> mini-page
+        </a>
+      </div>
+      <p class="footer-copyright">
+        © 2025 TheSecretJuice. MIT License. Built with ❤️ for the CLI community.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/app.js"></script>
+  <script>
+    // Load and display modules
+    document.addEventListener('DOMContentLoaded', async () => {
+      const modules = await loadModules();
+      displayModules(modules);
+    });
+  </script>
+</body>
+</html>

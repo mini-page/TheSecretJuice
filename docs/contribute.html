@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contribute - TheSecretJuice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/scrollbar.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💉</text></svg>">
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-brand">
+        <span class="navbar-icon">💉</span>
+        <span class="gradient-text">TheSecretJuice</span>
+      </a>
+      <ul class="navbar-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="modules.html">Modules</a></li>
+        <li><a href="installation.html">Installation</a></li>
+        <li><a href="contribute.html" class="active">Contribute</a></li>
+        <li><a href="https://github.com/mini-page/TheSecretJuice" target="_blank">
+          <i class="fab fa-github"></i> GitHub
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div style="max-width: 900px; margin: 0 auto; padding: 4rem 2rem;">
+    <h1 style="font-size: 3rem; font-weight: 900; margin-bottom: 1rem;">
+      <span class="gradient-text">Contribute</span>
+    </h1>
+    <p style="color: var(--text-dim); font-size: 1.125rem; margin-bottom: 3rem;">
+      Help make CLI tools better for everyone. Contributions are welcome!
+    </p>
+
+    <div class="card" style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 1rem;">
+        <i class="fas fa-lightbulb" style="color: var(--warning);"></i> Ways to Contribute
+      </h2>
+      <ul style="color: var(--text-dim); margin-left: 1.5rem; list-style: disc; line-height: 2;">
+        <li><strong style="color: var(--text);">Add new tool enhancements</strong> - Create wrappers for other CLI tools</li>
+        <li><strong style="color: var(--text);">Improve existing modules</strong> - Add features, fix bugs, enhance UI</li>
+        <li><strong style="color: var(--text);">Write documentation</strong> - Help users understand and use the tools</li>
+        <li><strong style="color: var(--text);">Report bugs</strong> - Found an issue? Let us know on GitHub</li>
+        <li><strong style="color: var(--text);">Suggest features</strong> - Have ideas? Open a discussion</li>
+        <li><strong style="color: var(--text);">Share feedback</strong> - Tell us what works and what doesn't</li>
+      </ul>
+    </div>
+
+    <div class="card" style="margin-bottom: 2rem;">
+      <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 1rem;">
+        <i class="fas fa-code" style="color: var(--secondary);"></i> Development Guidelines
+      </h2>
+      <h3 style="font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 1rem;">File Naming Convention</h3>
+      <div class="code-block">
+        <pre><code>tool-name-enhance.ps1  # Example: git-enhance.ps1</code></pre>
+      </div>
+
+      <h3 style="font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 1rem;">Module Structure</h3>
+      <ul style="color: var(--text-dim); margin-left: 1.5rem; list-style: disc; line-height: 2;">
+        <li>Interactive menu system with colored output</li>
+        <li>Settings persistence (JSON file)</li>
+        <li>Quick command aliases</li>
+        <li>Help function (<code class="code-inline">tool-help</code>)</li>
+        <li>Error detection and suggestions</li>
+        <li>Cross-platform support (Windows/Linux/macOS)</li>
+      </ul>
+
+      <h3 style="font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 1rem;">Code Style</h3>
+      <ul style="color: var(--text-dim); margin-left: 1.5rem; list-style: disc; line-height: 2;">
+        <li>Use descriptive variable names</li>
+        <li>Add comments for complex logic</li>
+        <li>Follow existing color scheme (Green=Success, Red=Error, Cyan=Info, Yellow=Warning)</li>
+        <li>Include emoji in output for better UX</li>
+        <li>Test on multiple platforms if possible</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h2 style="font-size: 1.75rem; font-weight: 700; margin-bottom: 1rem;">
+        <i class="fas fa-link" style="color: var(--accent);"></i> Getting Started
+      </h2>
+      <ol style="color: var(--text-dim); margin-left: 1.5rem; list-style: decimal; line-height: 2;">
+        <li>Fork the repository on <a href="https://github.com/mini-page/TheSecretJuice" target="_blank" style="color: var(--secondary);">GitHub</a></li>
+        <li>Clone your fork locally</li>
+        <li>Create a new branch for your feature</li>
+        <li>Make your changes and test thoroughly</li>
+        <li>Commit with clear, descriptive messages</li>
+        <li>Push to your fork and submit a pull request</li>
+      </ol>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="https://github.com/mini-page/TheSecretJuice" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        <a href="https://github.com/mini-page/TheSecretJuice/issues" target="_blank"><i class="fas fa-bug"></i> Report Issue</a>
+      </div>
+      <p class="footer-copyright">© 2025 TheSecretJuice. MIT License.</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>

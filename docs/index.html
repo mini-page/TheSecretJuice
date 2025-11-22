@@ -1,977 +1,286 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="PowerShell steroids for your favorite CLI tools. Transform boring command-line tools into interactive, colorful experiences.">
-    <meta name="keywords" content="PowerShell, CLI tools, yt-dlp, developer tools, command line, terminal">
-    <meta name="author" content="@ug_5711">
-    <title>TheSecretJuice - PowerShell Steroids for CLI Tools</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
-        
-        * {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
-        
-        .font-mono {
-            font-family: 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
-        }
-        
-        .gradient-text {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .gradient-border {
-            border: 2px solid;
-            border-image: linear-gradient(135deg, #667eea, #764ba2) 1;
-        }
-        
-        .code-block {
-            background: #1e293b;
-            border-radius: 12px;
-            padding: 1.5rem;
-            overflow-x: auto;
-        }
-        
-        .feature-card {
-            transition: all 0.3s ease;
-        }
-        
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-        }
-        
-        .tool-card {
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-        
-        .tool-card:hover {
-            border-color: #667eea;
-            transform: scale(1.05);
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
-        }
-        
-        .float-animation {
-            animation: float 6s ease-in-out infinite;
-        }
-        
-        @keyframes pulse-glow {
-            0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.5); }
-            50% { box-shadow: 0 0 40px rgba(102, 126, 234, 0.8); }
-        }
-        
-        .pulse-glow {
-            animation: pulse-glow 2s ease-in-out infinite;
-        }
-        
-        .hero-gradient {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-        }
-        
-        .nav-blur {
-            backdrop-filter: blur(12px);
-            background: rgba(15, 23, 42, 0.8);
-        }
-        
-        .scroll-indicator {
-            animation: bounce 2s infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-        
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 10px;
-        }
-        
-        ::-webkit-scrollbar-track {
-            background: #1e293b;
-        }
-        
-        ::-webkit-scrollbar-thumb {
-            background: linear-gradient(135deg, #667eea, #764ba2);
-            border-radius: 10px;
-        }
-        
-        ::-webkit-scrollbar-thumb:hover {
-            background: linear-gradient(135deg, #764ba2, #667eea);
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TheSecretJuice - PowerShell steroids for your favorite command-line tools. Interactive, colorful, user-friendly CLI enhancements.">
+  <title>TheSecretJuice - PowerShell CLI Enhancements</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/scrollbar.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💉</text></svg>">
 </head>
-<body class="bg-slate-900 text-white">
+<body>
+  
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-brand">
+        <span class="navbar-icon">💉</span>
+        <span class="gradient-text">TheSecretJuice</span>
+      </a>
+      
+      <ul class="navbar-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="modules.html">Modules</a></li>
+        <li><a href="installation.html">Installation</a></li>
+        <li><a href="contribute.html">Contribute</a></li>
+        <li><a href="https://github.com/mini-page/TheSecretJuice" target="_blank">
+          <i class="fab fa-github"></i> GitHub
+        </a></li>
+      </ul>
+    </div>
+  </nav>
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 nav-blur border-b border-slate-700">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-16">
-                <div class="flex items-center gap-3">
-                    <i class="fas fa-syringe text-3xl gradient-text"></i>
-                    <span class="text-xl font-bold">TheSecretJuice</span>
-                </div>
-                <div class="hidden md:flex items-center gap-8">
-                    <a href="#features" class="hover:text-purple-400 transition">Features</a>
-                    <a href="#tools" class="hover:text-purple-400 transition">Tools</a>
-                    <a href="#install" class="hover:text-purple-400 transition">Install</a>
-                    <a href="#contribute" class="hover:text-purple-400 transition">Contribute</a>
-                    <a href="https://github.com/mini-page/TheSecretJuice" target="_blank" class="flex items-center gap-2 bg-gradient-to-r from-purple-600 to-pink-600 px-4 py-2 rounded-lg hover:opacity-90 transition">
-                        <i class="fab fa-github"></i>
-                        <span>GitHub</span>
-                    </a>
-                </div>
-                <button class="md:hidden text-2xl">
-                    <i class="fas fa-bars"></i>
-                </button>
-            </div>
-        </div>
-    </nav>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div style="max-width: 1400px; margin: 0 auto;">
+      <h1 class="hero-title">
+        <span class="gradient-text">PowerShell Steroids</span><br>
+        for CLI Tools
+      </h1>
+      <p class="hero-subtitle">
+        Transform boring command-line tools into interactive, colorful, user-friendly experiences.
+        Say goodbye to cryptic flags and hello to intuitive menus.
+      </p>
+      <div class="hero-buttons">
+        <button class="btn btn-primary" onclick="window.location.href='installation.html'">
+          <i class="fas fa-download"></i> Quick Install
+        </button>
+        <button class="btn btn-outline" onclick="window.location.href='modules.html'">
+          <i class="fas fa-puzzle-piece"></i> Browse Modules
+        </button>
+      </div>
+    </div>
+  </section>
 
-    <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-16 pb-10">
-        <div class="absolute inset-0 hero-gradient opacity-20"></div>
-        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-slate-900 to-slate-900"></div>
-        
-        <!-- Floating Elements -->
-        <div class="absolute top-20 left-10 text-6xl opacity-20 float-animation" style="animation-delay: 0s;">
-            <i class="fas fa-terminal"></i>
-        </div>
-        <div class="absolute top-40 right-20 text-5xl opacity-20 float-animation" style="animation-delay: 1s;">
-            <i class="fas fa-code"></i>
-        </div>
-        <div class="absolute bottom-40 left-20 text-7xl opacity-20 float-animation" style="animation-delay: 2s;">
-            <i class="fas fa-laptop-code"></i>
-        </div>
-        
-        <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="mb-8 inline-block">
-                <i class="fas fa-syringe text-8xl gradient-text float-animation"></i>
-            </div>
-            <h1 class="text-5xl md:text-7xl font-bold mb-6">
-                PowerShell <span class="gradient-text">Steroids</span><br>
-                for CLI Tools
-            </h1>
-            <p class="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto">
-                Transform boring command-line tools into interactive, colorful, user-friendly experiences. Because your terminal deserves better UX.
-            </p>
-            
-            <!-- CTA Buttons -->
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-                <a href="#install" class="group relative px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg text-lg font-semibold hover:opacity-90 transition flex items-center gap-3 pulse-glow">
-                    <i class="fas fa-download"></i>
-                    <span>Get Started</span>
-                    <i class="fas fa-arrow-right group-hover:translate-x-1 transition"></i>
-                </a>
-                <a href="https://github.com/mini-page/TheSecretJuice" target="_blank" class="px-8 py-4 border-2 border-purple-500 rounded-lg text-lg font-semibold hover:bg-purple-500/10 transition flex items-center gap-3">
-                    <i class="fab fa-github"></i>
-                    <span>View on GitHub</span>
-                    <span class="bg-purple-500 text-white px-2 py-1 rounded text-sm">⭐ Star</span>
-                </a>
-            </div>
-            
-            <!-- Stats -->
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-                <div class="bg-slate-800/50 backdrop-blur rounded-xl p-4 border border-slate-700">
-                    <div class="text-3xl font-bold gradient-text">90%</div>
-                    <div class="text-sm text-gray-400">Faster Execution</div>
-                </div>
-                <div class="bg-slate-800/50 backdrop-blur rounded-xl p-4 border border-slate-700">
-                    <div class="text-3xl font-bold gradient-text">87%</div>
-                    <div class="text-sm text-gray-400">Fewer Keystrokes</div>
-                </div>
-                <div class="bg-slate-800/50 backdrop-blur rounded-xl p-4 border border-slate-700">
-                    <div class="text-3xl font-bold gradient-text">100%</div>
-                    <div class="text-sm text-gray-400">Open Source</div>
-                </div>
-                <div class="bg-slate-800/50 backdrop-blur rounded-xl p-4 border border-slate-700">
-                    <div class="text-3xl font-bold gradient-text">0</div>
-                    <div class="text-sm text-gray-400">Dependencies</div>
-                </div>
-            </div>
-            
-            <!-- Scroll Indicator -->
-            <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 scroll-indicator">
-                <i class="fas fa-chevron-down text-2xl text-purple-400"></i>
-            </div>
-        </div>
-    </section>
 
-    <!-- Problem/Solution Section -->
-    <section class="py-20 bg-slate-800/30">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">The Problem with CLI Tools</h2>
-                <p class="text-xl text-gray-400">Powerful but stuck in 1995 UX</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 gap-8 mb-16">
-                <!-- Before -->
-                <div class="bg-gradient-to-br from-red-900/20 to-slate-900 rounded-2xl p-8 border-2 border-red-500">
-                    <div class="flex items-center gap-3 mb-6">
-                        <i class="fas fa-skull text-4xl text-red-400"></i>
-                        <div>
-                            <h3 class="text-2xl font-bold text-red-400">Without TheSecretJuice</h3>
-                            <p class="text-gray-400">Traditional CLI experience</p>
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-times-circle text-red-400 mt-1"></i>
-                            <div>
-                                <div class="font-semibold">Cryptic Flags</div>
-                                <div class="text-sm text-gray-400">Memorize 50+ options or read docs</div>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-times-circle text-red-400 mt-1"></i>
-                            <div>
-                                <div class="font-semibold">Man Page Diving</div>
-                                <div class="text-sm text-gray-400">5 minutes reading, 30 seconds executing</div>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-times-circle text-red-400 mt-1"></i>
-                            <div>
-                                <div class="font-semibold">Typo Nightmares</div>
-                                <div class="text-sm text-gray-400">One wrong dash = start over</div>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-times-circle text-red-400 mt-1"></i>
-                            <div>
-                                <div class="font-semibold">Zero Visual Feedback</div>
-                                <div class="text-sm text-gray-400">Is it working? Who knows!</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="code-block mt-6 text-sm">
-                        <div class="text-yellow-300 font-mono">$ yt-dlp -f "bestvideo[ext=mp4]+bestaudio[ext=m4a]" \</div>
-                        <div class="text-yellow-300 font-mono ml-4">--embed-subs --merge-output-format mp4 \</div>
-                        <div class="text-yellow-300 font-mono ml-4">--output "~/Downloads/%(title)s.%(ext)s" URL</div>
-                        <div class="text-red-400 font-mono mt-2">Error: invalid format specification</div>
-                    </div>
-                </div>
-                
-                <!-- After -->
-                <div class="bg-gradient-to-br from-emerald-900/20 to-slate-900 rounded-2xl p-8 border-2 border-emerald-500">
-                    <div class="flex items-center gap-3 mb-6">
-                        <i class="fas fa-rocket text-4xl text-emerald-400"></i>
-                        <div>
-                            <h3 class="text-2xl font-bold text-emerald-400">With TheSecretJuice</h3>
-                            <p class="text-gray-400">Modern CLI experience</p>
-                        </div>
-                    </div>
-                    <div class="space-y-4">
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-emerald-400 mt-1"></i>
-                            <div>
-                                <div class="font-semibold">Interactive Menus</div>
-                                <div class="text-sm text-gray-400">Point, click, done</div>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-emerald-400 mt-1"></i>
-                            <div>
-                                <div class="font-semibold">Visual Feedback</div>
-                                <div class="text-sm text-gray-400">Colors, emojis, progress bars</div>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-emerald-400 mt-1"></i>
-                            <div>
-                                <div class="font-semibold">Smart Validation</div>
-                                <div class="text-sm text-gray-400">Catches errors before execution</div>
-                            </div>
-                        </div>
-                        <div class="flex items-start gap-3">
-                            <i class="fas fa-check-circle text-emerald-400 mt-1"></i>
-                            <div>
-                                <div class="font-semibold">Quick Aliases</div>
-                                <div class="text-sm text-gray-400">Power user shortcuts included</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="code-block mt-6 text-sm">
-                        <div class="text-yellow-300 font-mono">$ yt-dlp</div>
-                        <div class="text-cyan-300 font-mono mt-2">🎬 Enter video URL: <span class="text-white">https://youtube.com/...</span></div>
-                        <div class="text-cyan-300 font-mono mt-1">📊 Select quality: <span class="text-white bg-emerald-900/40 px-2 py-0.5 rounded">1080p</span></div>
-                        <div class="text-emerald-400 font-mono mt-2">✅ Downloading... [████████] 100%</div>
-                        <div class="text-emerald-400 font-mono">✨ Done! Saved to Downloads/</div>
-                    </div>
-                </div>
-            </div>
+  <!-- Features Section -->
+  <section style="max-width: 1400px; margin: 0 auto; padding: 0 2rem;">
+    <div class="feature-grid">
+      <div class="feature-item glass">
+        <div class="feature-icon">
+          <i class="fas fa-palette"></i>
         </div>
-    </section>
-
-    <!-- Features Section -->
-    <section id="features" class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">Why <span class="gradient-text">TheSecretJuice?</span></h2>
-                <p class="text-xl text-gray-400">Everything you need to make CLI tools feel like 2030</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="feature-card bg-gradient-to-br from-purple-900/30 to-slate-900 rounded-2xl p-8 border border-slate-700">
-                    <div class="text-5xl mb-4">🎨</div>
-                    <h3 class="text-2xl font-bold mb-3">Interactive Menus</h3>
-                    <p class="text-gray-400">No more memorizing cryptic flags. Visual menus guide you through every option.</p>
-                </div>
-                
-                <div class="feature-card bg-gradient-to-br from-pink-900/30 to-slate-900 rounded-2xl p-8 border border-slate-700">
-                    <div class="text-5xl mb-4">🌈</div>
-                    <h3 class="text-2xl font-bold mb-3">Colorful Output</h3>
-                    <p class="text-gray-400">Visual feedback with colors, emojis, and progress indicators. See what's happening.</p>
-                </div>
-                
-                <div class="feature-card bg-gradient-to-br from-blue-900/30 to-slate-900 rounded-2xl p-8 border border-slate-700">
-                    <div class="text-5xl mb-4">🛡️</div>
-                    <h3 class="text-2xl font-bold mb-3">Smart Validation</h3>
-                    <p class="text-gray-400">Auto-validates inputs, creates directories, and catches errors before execution.</p>
-                </div>
-                
-                <div class="feature-card bg-gradient-to-br from-green-900/30 to-slate-900 rounded-2xl p-8 border border-slate-700">
-                    <div class="text-5xl mb-4">🚀</div>
-                    <h3 class="text-2xl font-bold mb-3">Quick Aliases</h3>
-                    <p class="text-gray-400">Power user shortcuts for when you know exactly what you want. Best of both worlds.</p>
-                </div>
-                
-                <div class="feature-card bg-gradient-to-br from-orange-900/30 to-slate-900 rounded-2xl p-8 border border-slate-700">
-                    <div class="text-5xl mb-4">📦</div>
-                    <h3 class="text-2xl font-bold mb-3">Zero Dependencies</h3>
-                    <p class="text-gray-400">Just PowerShell and your existing CLI tools. No bloat, no hassle.</p>
-                </div>
-                
-                <div class="feature-card bg-gradient-to-br from-cyan-900/30 to-slate-900 rounded-2xl p-8 border border-slate-700">
-                    <div class="text-5xl mb-4">🌍</div>
-                    <h3 class="text-2xl font-bold mb-3">Cross-Platform</h3>
-                    <p class="text-gray-400">Works on Windows, Linux, and macOS with PowerShell Core.</p>
-                </div>
-            </div>
+        <h3 class="feature-title">Interactive Menus</h3>
+        <p class="feature-description">No more memorizing cryptic flags. Beautiful, colorful menus guide you through every option.</p>
+      </div>
+      
+      <div class="feature-item glass">
+        <div class="feature-icon">
+          <i class="fas fa-cookie-bite"></i>
         </div>
-    </section>
-
-    <!-- Tools Section -->
-    <section id="tools" class="py-20 bg-slate-800/30">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">Enhanced Tools</h2>
-                <p class="text-xl text-gray-400">Currently available & coming soon</p>
-            </div>
-            
-            <!-- Live Tools -->
-            <div class="mb-12">
-                <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
-                    <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm">✅ LIVE</span>
-                    <span>Ready to Use</span>
-                </h3>
-                <div class="grid md:grid-cols-2 gap-6">
-                    <div class="tool-card bg-gradient-to-br from-purple-900/30 to-slate-900 rounded-xl p-6 border-2">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="flex items-center gap-4">
-                                <i class="fas fa-video text-4xl text-purple-400"></i>
-                                <div>
-                                    <h4 class="text-2xl font-bold">yt-dlp</h4>
-                                    <p class="text-gray-400">Video/Audio Downloader</p>
-                                </div>
-                            </div>
-                            <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">LIVE</span>
-                        </div>
-                        <ul class="space-y-2 text-gray-300 mb-4">
-                            <li class="flex items-center gap-2">
-                                <i class="fas fa-check text-green-400"></i>
-                                Interactive quality selection
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <i class="fas fa-check text-green-400"></i>
-                                Playlist support with progress
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <i class="fas fa-check text-green-400"></i>
-                                Auto subtitle embedding
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <i class="fas fa-check text-green-400"></i>
-                                Smart filename handling
-                            </li>
-                        </ul>
-                        <a href="https://github.com/mini-page/TheSecretJuice/blob/main/docs/yt-dlp-enhance.md" target="_blank" class="text-purple-400 hover:text-purple-300 transition flex items-center gap-2">
-                            View Documentation <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                    
-                    <div class="tool-card bg-gradient-to-br from-blue-900/30 to-slate-900 rounded-xl p-6 border-2">
-                        <div class="flex items-start justify-between mb-4">
-                            <div class="flex items-center gap-4">
-                                <i class="fas fa-folder-tree text-4xl text-blue-400"></i>
-                                <div>
-                                    <h4 class="text-2xl font-bold">nav-enhance</h4>
-                                    <p class="text-gray-400">Directory Navigation</p>
-                                </div>
-                            </div>
-                            <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-bold">LIVE</span>
-                        </div>
-                        <ul class="space-y-2 text-gray-300 mb-4">
-                            <li class="flex items-center gap-2">
-                                <i class="fas fa-check text-green-400"></i>
-                                Quick directory bookmarks
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <i class="fas fa-check text-green-400"></i>
-                                Interactive folder selection
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <i class="fas fa-check text-green-400"></i>
-                                Recent paths history
-                            </li>
-                            <li class="flex items-center gap-2">
-                                <i class="fas fa-check text-green-400"></i>
-                                Smart auto-completion
-                            </li>
-                        </ul>
-                        <a href="https://github.com/mini-page/TheSecretJuice/blob/main/docs/nav-enhance.md" target="_blank" class="text-blue-400 hover:text-blue-300 transition flex items-center gap-2">
-                            View Documentation <i class="fas fa-arrow-right"></i>
-                        </a>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Coming Soon -->
-            <div>
-                <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
-                    <span class="bg-yellow-500 text-slate-900 px-3 py-1 rounded-full text-sm">🚧 COMING SOON</span>
-                    <span>In Development</span>
-                </h3>
-                <div class="grid md:grid-cols-3 gap-6">
-                    <div class="bg-slate-800/50 rounded-xl p-6 border border-yellow-500/30">
-                        <i class="fas fa-search text-3xl text-yellow-400 mb-3"></i>
-                        <h4 class="text-xl font-bold mb-2">fzf</h4>
-                        <p class="text-gray-400 text-sm">Fuzzy finder with preset workflows</p>
-                    </div>
-                    <div class="bg-slate-800/50 rounded-xl p-6 border border-yellow-500/30">
-                        <i class="fas fa-route text-3xl text-yellow-400 mb-3"></i>
-                        <h4 class="text-xl font-bold mb-2">zoxide</h4>
-                        <p class="text-gray-400 text-sm">Smart directory jumping</p>
-                    </div>
-                    <div class="bg-slate-800/50 rounded-xl p-6 border border-yellow-500/30">
-                        <i class="fas fa-file-code text-3xl text-yellow-400 mb-3"></i>
-                        <h4 class="text-xl font-bold mb-2">ripgrep</h4>
-                        <p class="text-gray-400 text-sm">Interactive search tool</p>
-                    </div>
-                    <div class="bg-slate-800/50 rounded-xl p-6 border border-yellow-500/30">
-                        <i class="fas fa-cat text-3xl text-yellow-400 mb-3"></i>
-                        <h4 class="text-xl font-bold mb-2">bat</h4>
-                        <p class="text-gray-400 text-sm">Enhanced file viewer</p>
-                    </div>
-                    <div class="bg-slate-800/50 rounded-xl p-6 border border-yellow-500/30">
-                        <i class="fas fa-folder-open text-3xl text-yellow-400 mb-3"></i>
-                        <h4 class="text-xl font-bold mb-2">fd</h4>
-                        <p class="text-gray-400 text-sm">Interactive file finder</p>
-                    </div>
-                    <div class="bg-slate-800/50 rounded-xl p-6 border border-purple-500/30">
-                        <i class="fas fa-question text-3xl text-purple-400 mb-3"></i>
-                        <h4 class="text-xl font-bold mb-2">Your Tool?</h4>
-                        <p class="text-gray-400 text-sm">Suggest in GitHub issues!</p>
-                    </div>
-                </div>
-            </div>
+        <h3 class="feature-title">Smart Features</h3>
+        <p class="feature-description">Cookie support, download archives, error detection, and intelligent defaults.</p>
+      </div>
+      
+      <div class="feature-item glass">
+        <div class="feature-icon">
+          <i class="fas fa-bolt"></i>
         </div>
-    </section>
-
-    <!-- Installation Section -->
-    <section id="install" class="py-20">
-        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">Get Started in <span class="gradient-text">60 Seconds</span></h2>
-                <p class="text-xl text-gray-400">One command to rule them all</p>
-            </div>
-            
-            <div class="bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 border border-slate-700 mb-12">
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-2xl font-bold flex items-center gap-3">
-                        <i class="fas fa-terminal text-purple-400"></i>
-                        Installation Command
-                    </h3>
-                    <button onclick="copyInstallCommand()" class="bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg transition flex items-center gap-2">
-                        <i class="fas fa-copy"></i>
-                        <span id="copyBtn">Copy</span>
-                    </button>
-                </div>
-                <div class="code-block">
-                    <pre class="text-lg font-mono text-cyan-300" id="installCommand">iwr https://raw.githubusercontent.com/mini-page/TheSecretJuice/main/install.ps1 | iex</pre>
-                </div>
-                <div class="mt-6 grid md:grid-cols-3 gap-4 text-center">
-                    <div class="bg-slate-700/50 rounded-lg p-4">
-                        <div class="text-3xl mb-2">1️⃣</div>
-                        <p class="font-semibold">Copy Command</p>
-                        <p class="text-sm text-gray-400">Click button above</p>
-                    </div>
-                    <div class="bg-slate-700/50 rounded-lg p-4">
-                        <div class="text-3xl mb-2">2️⃣</div>
-                        <p class="font-semibold">Open PowerShell</p>
-                        <p class="text-sm text-gray-400">Paste & press Enter</p>
-                    </div>
-                    <div class="bg-slate-700/50 rounded-lg p-4">
-                        <div class="text-3xl mb-2">3️⃣</div>
-                        <p class="font-semibold">Start Using</p>
-                        <p class="text-sm text-gray-400">You're ready!</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Manual Installation -->
-            <details class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                <summary class="cursor-pointer text-xl font-bold flex items-center gap-3 hover:text-purple-400 transition">
-                    <i class="fas fa-code"></i>
-                    Manual Installation
-                    <i class="fas fa-chevron-down ml-auto"></i>
-                </summary>
-                <div class="mt-6 space-y-4">
-                    <div>
-                        <h4 class="font-bold mb-2">Option 1: Clone Repository</h4>
-                        <div class="code-block">
-                            <pre class="font-mono text-sm text-cyan-300">git clone https://github.com/mini-page/TheSecretJuice.git
-cd TheSecretJuice
-. ./install.ps1</pre>
-                        </div>
-                    </div>
-                    <div>
-                        <h4 class="font-bold mb-2">Option 2: Add to PowerShell Profile</h4>
-                        <div class="code-block">
-                            <pre class="font-mono text-sm text-cyan-300"># Open your profile
-notepad $PROFILE
-
-# Add these lines
-$juicePath = "$env:USERPROFILE\Documents\PowerShell\Scripts\TheSecretJuice"
-. "$juicePath\yt-dlp.ps1"
-. "$juicePath\nav-enhance.ps1"</pre>
-                        </div>
-                    </div>
-                </div>
-            </details>
+        <h3 class="feature-title">Quick Aliases</h3>
+        <p class="feature-description">One-line commands for common tasks. Save time with powerful shortcuts.</p>
+      </div>
+      
+      <div class="feature-item glass">
+        <div class="feature-icon">
+          <i class="fas fa-save"></i>
         </div>
-    </section>
+        <h3 class="feature-title">Settings Memory</h3>
+        <p class="feature-description">Save your preferences once, skip repetitive prompts forever.</p>
+      </div>
+      
+      <div class="feature-item glass">
+        <div class="feature-icon">
+          <i class="fas fa-rainbow"></i>
+        </div>
+        <h3 class="feature-title">Beautiful UI</h3>
+        <p class="feature-description">Colorful, emoji-rich interfaces that make CLI tools feel modern.</p>
+      </div>
+      
+      <div class="feature-item glass">
+        <div class="feature-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <h3 class="feature-title">Error Detection</h3>
+        <p class="feature-description">Smart error messages with automatic fix suggestions.</p>
+      </div>
+    </div>
+  </section>
 
-    <!-- Contribute Section -->
-    <section id="contribute" class="py-20 bg-slate-800/30">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">Join the <span class="gradient-text">Movement</span></h2>
-                <p class="text-xl text-gray-400">Help make CLI tools feel like 2030</p>
-            </div>
-            
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-                <div class="bg-gradient-to-br from-yellow-900/30 to-slate-900 rounded-xl p-6 border border-slate-700 text-center">
-                    <i class="fas fa-star text-5xl text-yellow-400 mb-4"></i>
-                    <h3 class="text-xl font-bold mb-2">Star the Repo</h3>
-                    <p class="text-gray-400 text-sm mb-4">Help others discover it</p>
-                    <a href="https://github.com/mini-page/TheSecretJuice" target="_blank" class="inline-block bg-yellow-500 hover:bg-yellow-600 text-slate-900 font-bold px-4 py-2 rounded-lg transition">
-                        <i class="fab fa-github mr-2"></i>Star Now
-                    </a>
-                </div>
-                
-                <div class="bg-gradient-to-br from-cyan-900/30 to-slate-900 rounded-xl p-6 border border-slate-700 text-center">
-                    <i class="fas fa-code text-5xl text-cyan-400 mb-4"></i>
-                    <h3 class="text-xl font-bold mb-2">Contribute Code</h3>
-                    <p class="text-gray-400 text-sm mb-4">Submit PRs, add tools</p>
-                    <a href="https://github.com/mini-page/TheSecretJuice/pulls" target="_blank" class="inline-block bg-cyan-500 hover:bg-cyan-600 text-slate-900 font-bold px-4 py-2 rounded-lg transition">
-                        <i class="fas fa-code-branch mr-2"></i>Submit PR
-                    </a>
-                </div>
-                
-                <div class="bg-gradient-to-br from-pink-900/30 to-slate-900 rounded-xl p-6 border border-slate-700 text-center">
-                    <i class="fas fa-lightbulb text-5xl text-pink-400 mb-4"></i>
-                    <h3 class="text-xl font-bold mb-2">Suggest Tools</h3>
-                    <p class="text-gray-400 text-sm mb-4">What should we enhance?</p>
-                    <a href="https://github.com/mini-page/TheSecretJuice/issues/new" target="_blank" class="inline-block bg-pink-500 hover:bg-pink-600 text-white font-bold px-4 py-2 rounded-lg transition">
-                        <i class="fas fa-plus mr-2"></i>New Issue
-                    </a>
-                </div>
-                
-                <div class="bg-gradient-to-br from-green-900/30 to-slate-900 rounded-xl p-6 border border-slate-700 text-center">
-                    <i class="fas fa-share text-5xl text-green-400 mb-4"></i>
-                    <h3 class="text-xl font-bold mb-2">Share It</h3>
-                    <p class="text-gray-400 text-sm mb-4">Help your dev friends</p>
-                    <a href="https://twitter.com/intent/tweet?text=Check%20out%20TheSecretJuice%20-%20PowerShell%20steroids%20for%20CLI%20tools!&url=https://github.com/mini-page/TheSecretJuice" target="_blank" class="inline-block bg-green-500 hover:bg-green-600 text-slate-900 font-bold px-4 py-2 rounded-lg transition">
-                        <i class="fas fa-share-nodes mr-2"></i>Share
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Contributor Guidelines -->
-            <div class="bg-slate-800/50 rounded-xl p-8 border border-slate-700">
-                <h3 class="text-2xl font-bold mb-6 flex items-center gap-3">
-                    <i class="fas fa-book text-purple-400"></i>
-                    Contributor Guidelines
-                </h3>
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div>
-                        <h4 class="font-bold mb-3 flex items-center gap-2">
-                            <i class="fas fa-check-circle text-green-400"></i>
-                            Design Philosophy
-                        </h4>
-                        <ul class="space-y-2 text-gray-300 text-sm">
-                            <li>✅ Non-intrusive - Keep original tool behavior</li>
-                            <li>✅ Progressive - Simple usage stays simple</li>
-                            <li>✅ Visual clarity - Colors, emojis, formatting</li>
-                            <li>✅ Cross-platform - Works everywhere</li>
-                            <li>✅ Zero dependencies - Just PowerShell</li>
-                            <li>✅ Lightweight - Fast loading, minimal overhead</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <h4 class="font-bold mb-3 flex items-center gap-2">
-                            <i class="fas fa-code text-cyan-400"></i>
-                            Enhancement Template
-                        </h4>
-                        <div class="code-block text-xs">
-                            <pre class="font-mono text-cyan-300"># tool-name.ps1
-function tool-name {
-    param([string]$args)
+  <!-- Quick Stats -->
+  <section style="max-width: 1400px; margin: 4rem auto; padding: 3rem 2rem; text-align: center;" class="glass-strong">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+      <div>
+        <div style="font-size: 3rem; font-weight: 900; color: var(--primary); margin-bottom: 0.5rem;">4</div>
+        <div style="color: var(--text-dim); font-weight: 600;">Enhancement Modules</div>
+      </div>
+      <div>
+        <div style="font-size: 3rem; font-weight: 900; color: var(--secondary); margin-bottom: 0.5rem;">50+</div>
+        <div style="color: var(--text-dim); font-weight: 600;">Powerful Commands</div>
+      </div>
+      <div>
+        <div style="font-size: 3rem; font-weight: 900; color: var(--accent); margin-bottom: 0.5rem;">100%</div>
+        <div style="color: var(--text-dim); font-weight: 600;">Open Source</div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Why TheSecretJuice -->
+  <section style="max-width: 900px; margin: 4rem auto; padding: 0 2rem;">
+    <h2 style="font-size: 2.5rem; font-weight: 900; text-align: center; margin-bottom: 3rem;">
+      <span class="gradient-text">Why TheSecretJuice?</span>
+    </h2>
     
-    # Banner
-    Write-Host "Tool Enhancement" -ForegroundColor Cyan
+    <div class="glass" style="padding: 2rem; margin-bottom: 2rem;">
+      <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--text);">
+        <i class="fas fa-times-circle" style="color: var(--error);"></i> Before
+      </h3>
+      <div class="code-block">
+        <pre><code>yt-dlp --cookies-from-browser chrome --user-agent "Mozilla..." \
+  -f "bestvideo[ext=mp4]+bestaudio" \
+  --download-archive archive.txt \
+  -o "~/Downloads/%(title)s.%(ext)s" "URL"</code></pre>
+      </div>
+    </div>
     
-    # Interactive menu
-    # Error handling
-    # Execute original tool
-}
+    <div class="glass" style="padding: 2rem;">
+      <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--text);">
+        <i class="fas fa-check-circle" style="color: var(--success);"></i> After
+      </h3>
+      <div class="code-block">
+        <pre><code>yt-dlp "URL"  # Interactive prompts guide you</code></pre>
+      </div>
+      <p style="margin-top: 1rem; color: var(--text-dim);">Or even simpler:</p>
+      <div class="code-block">
+        <pre><code>yt-video "URL"  # One command, done!</code></pre>
+      </div>
+    </div>
+  </section>
 
-# Quick aliases
-function tool-shortcut { ... }</pre>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+  <!-- Available Tools -->
+  <section style="max-width: 1400px; margin: 4rem auto; padding: 0 2rem;">
+    <h2 style="font-size: 2.5rem; font-weight: 900; text-align: center; margin-bottom: 3rem;">
+      <span class="gradient-text">Available Tools</span>
+    </h2>
+    
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
+      <!-- yt-dlp-enhance -->
+      <div class="card">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">
+          <i class="fas fa-video" style="background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
         </div>
-    </section>
-
-    <!-- Community/Social Proof Section -->
-    <section class="py-20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">What Developers Say</h2>
-                <p class="text-xl text-gray-400">Join hundreds of developers enhancing their CLI experience</p>
-            </div>
-            
-            <div class="grid md:grid-cols-3 gap-8 mb-12">
-                <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center text-2xl">
-                            👨‍💻
-                        </div>
-                        <div>
-                            <div class="font-bold">DevUser123</div>
-                            <div class="text-sm text-gray-400">Full Stack Developer</div>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 italic">"Finally! CLI tools that don't feel like archaeology. TheSecretJuice saved me hours of documentation reading."</p>
-                    <div class="flex gap-1 mt-4 text-yellow-400">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-                
-                <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-cyan-500 to-blue-500 flex items-center justify-center text-2xl">
-                            👩‍💻
-                        </div>
-                        <div>
-                            <div class="font-bold">SysAdmin_Jane</div>
-                            <div class="text-sm text-gray-400">System Administrator</div>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 italic">"The interactive menus are a game-changer. I can finally remember how to use yt-dlp without googling every time."</p>
-                    <div class="flex gap-1 mt-4 text-yellow-400">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-                
-                <div class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                    <div class="flex items-center gap-3 mb-4">
-                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-green-500 to-emerald-500 flex items-center justify-center text-2xl">
-                            🔐
-                        </div>
-                        <div>
-                            <div class="font-bold">SecurityPro</div>
-                            <div class="text-sm text-gray-400">Security Researcher</div>
-                        </div>
-                    </div>
-                    <p class="text-gray-300 italic">"Perfect for my workflow. The aliases are great for automation, and the interactive mode helps new team members onboard faster."</p>
-                    <div class="flex gap-1 mt-4 text-yellow-400">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- GitHub Stats -->
-            <div class="bg-gradient-to-r from-purple-900/30 to-pink-900/30 rounded-xl p-8 border border-purple-500/30">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-                    <div>
-                        <div class="text-4xl font-bold gradient-text mb-2">⭐ Stars</div>
-                        <p class="text-gray-400">Growing community</p>
-                    </div>
-                    <div>
-                        <div class="text-4xl font-bold gradient-text mb-2">🍴 Forks</div>
-                        <p class="text-gray-400">Active contributors</p>
-                    </div>
-                    <div>
-                        <div class="text-4xl font-bold gradient-text mb-2">📦 Tools</div>
-                        <p class="text-gray-400">Enhanced & counting</p>
-                    </div>
-                    <div>
-                        <div class="text-4xl font-bold gradient-text mb-2">MIT</div>
-                        <p class="text-gray-400">Open source license</p>
-                    </div>
-                </div>
-            </div>
+        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">yt-dlp-enhance</h3>
+        <p style="color: var(--text-dim); margin-bottom: 1rem;">Download videos/audio with menus, cookies, archives</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+          <span class="badge badge-primary">yt-dlp</span>
+          <span class="badge badge-primary">yt-video</span>
+          <span class="badge badge-primary">yt-audio</span>
         </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="py-20 bg-slate-800/30">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-5xl font-bold mb-4">Frequently Asked Questions</h2>
-                <p class="text-xl text-gray-400">Everything you need to know</p>
-            </div>
-            
-            <div class="space-y-4">
-                <details class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                    <summary class="cursor-pointer font-bold text-lg hover:text-purple-400 transition flex items-center justify-between">
-                        <span>Does this replace my existing CLI tools?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </summary>
-                    <p class="mt-4 text-gray-300">No! TheSecretJuice wraps your existing tools with enhanced interfaces. The original commands still work exactly as before. It's purely additive.</p>
-                </details>
-                
-                <details class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                    <summary class="cursor-pointer font-bold text-lg hover:text-purple-400 transition flex items-center justify-between">
-                        <span>What if I prefer the original CLI?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </summary>
-                    <p class="mt-4 text-gray-300">That's fine! Just use the original command with flags. TheSecretJuice only activates when you run the command without arguments. You can also unload specific enhancements from your profile.</p>
-                </details>
-                
-                <details class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                    <summary class="cursor-pointer font-bold text-lg hover:text-purple-400 transition flex items-center justify-between">
-                        <span>Is it safe to use?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </summary>
-                    <p class="mt-4 text-gray-300">Yes! It's open source (MIT license), all code is visible on GitHub, and it has zero telemetry. It only wraps your existing tools and doesn't send any data anywhere.</p>
-                </details>
-                
-                <details class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                    <summary class="cursor-pointer font-bold text-lg hover:text-purple-400 transition flex items-center justify-between">
-                        <span>Does it work on Linux/macOS?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </summary>
-                    <p class="mt-4 text-gray-300">Yes! As long as you have PowerShell Core 7+ installed. TheSecretJuice is cross-platform and works on Windows, Linux, and macOS.</p>
-                </details>
-                
-                <details class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                    <summary class="cursor-pointer font-bold text-lg hover:text-purple-400 transition flex items-center justify-between">
-                        <span>Can I request a tool to be enhanced?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </summary>
-                    <p class="mt-4 text-gray-300">Absolutely! Open an issue on GitHub with your tool suggestion. Better yet, contribute the enhancement yourself - we provide templates and guidelines!</p>
-                </details>
-                
-                <details class="bg-slate-800/50 rounded-xl p-6 border border-slate-700">
-                    <summary class="cursor-pointer font-bold text-lg hover:text-purple-400 transition flex items-center justify-between">
-                        <span>Does it slow down my tools?</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </summary>
-                    <p class="mt-4 text-gray-300">Negligible impact! TheSecretJuice scripts are lightweight and only add a few milliseconds of overhead. The interactive menus actually save you time overall.</p>
-                </details>
-            </div>
+        <a href="module.html?name=yt-dlp-enhance" class="btn btn-secondary" style="display: inline-block; width: 100%; text-align: center;">
+          <i class="fas fa-book"></i> View Docs
+        </a>
+      </div>
+      
+      <!-- nav-enhance -->
+      <div class="card">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">
+          <i class="fas fa-compass" style="background: var(--gradient-secondary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
         </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="py-20 relative overflow-hidden">
-        <div class="absolute inset-0 hero-gradient opacity-20"></div>
-        <div class="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <i class="fas fa-syringe text-7xl gradient-text mb-6 inline-block float-animation"></i>
-            <h2 class="text-4xl md:text-6xl font-bold mb-6">Ready to Upgrade Your CLI?</h2>
-            <p class="text-xl text-gray-300 mb-8">Join developers making their terminal experience feel like 2030</p>
-            
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#install" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg text-lg font-bold hover:opacity-90 transition flex items-center gap-3 pulse-glow">
-                    <i class="fas fa-download"></i>
-                    <span>Install Now</span>
-                </a>
-                <a href="https://github.com/mini-page/TheSecretJuice" target="_blank" class="px-8 py-4 border-2 border-purple-500 rounded-lg text-lg font-bold hover:bg-purple-500/10 transition flex items-center gap-3">
-                    <i class="fab fa-github"></i>
-                    <span>View Source</span>
-                </a>
-            </div>
-            
-            <div class="mt-12 flex flex-wrap items-center justify-center gap-6 text-sm text-gray-400">
-                <div class="flex items-center gap-2">
-                    <i class="fas fa-shield-alt text-green-400"></i>
-                    <span>Open Source</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <i class="fas fa-code text-blue-400"></i>
-                    <span>MIT License</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <i class="fas fa-lock text-purple-400"></i>
-                    <span>Zero Telemetry</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <i class="fas fa-bolt text-yellow-400"></i>
-                    <span>Lightweight</span>
-                </div>
-            </div>
+        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">nav-enhance</h3>
+        <p style="color: var(--text-dim); margin-bottom: 1rem;">Smart navigation with zoxide + eza, bookmarks</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+          <span class="badge badge-secondary">zi</span>
+          <span class="badge badge-secondary">zz</span>
+          <span class="badge badge-secondary">bm</span>
+          <span class="badge badge-secondary">ll</span>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-slate-950 border-t border-slate-800 py-12">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid md:grid-cols-4 gap-8 mb-8">
-                <div>
-                    <div class="flex items-center gap-3 mb-4">
-                        <i class="fas fa-syringe text-3xl gradient-text"></i>
-                        <span class="text-xl font-bold">TheSecretJuice</span>
-                    </div>
-                    <p class="text-gray-400 text-sm">PowerShell steroids for your favorite CLI tools. Making terminals feel like 2030.</p>
-                </div>
-                
-                <div>
-                    <h3 class="font-bold mb-4">Quick Links</h3>
-                    <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="#features" class="hover:text-purple-400 transition">Features</a></li>
-                        <li><a href="#tools" class="hover:text-purple-400 transition">Tools</a></li>
-                        <li><a href="#install" class="hover:text-purple-400 transition">Installation</a></li>
-                        <li><a href="#contribute" class="hover:text-purple-400 transition">Contribute</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="font-bold mb-4">Resources</h3>
-                    <ul class="space-y-2 text-gray-400 text-sm">
-                        <li><a href="https://github.com/mini-page/TheSecretJuice/blob/main/README.md" target="_blank" class="hover:text-purple-400 transition">Documentation</a></li>
-                        <li><a href="https://github.com/mini-page/TheSecretJuice/issues" target="_blank" class="hover:text-purple-400 transition">Issues</a></li>
-                        <li><a href="https://github.com/mini-page/TheSecretJuice/discussions" target="_blank" class="hover:text-purple-400 transition">Discussions</a></li>
-                        <li><a href="https://github.com/mini-page/TheSecretJuice/blob/main/LICENSE" target="_blank" class="hover:text-purple-400 transition">License</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h3 class="font-bold mb-4">Connect</h3>
-                    <div class="flex gap-4">
-                        <a href="https://github.com/mini-page/TheSecretJuice" target="_blank" class="w-10 h-10 bg-slate-800 hover:bg-purple-600 rounded-lg flex items-center justify-center transition">
-                            <i class="fab fa-github text-xl"></i>
-                        </a>
-                        <a href="https://linkedin.com/in/ug5711" target="_blank" class="w-10 h-10 bg-slate-800 hover:bg-purple-600 rounded-lg flex items-center justify-center transition">
-                            <i class="fab fa-linkedin text-xl"></i>
-                        </a>
-                        <a href="https://twitter.com/ug_5711" target="_blank" class="w-10 h-10 bg-slate-800 hover:bg-purple-600 rounded-lg flex items-center justify-center transition">
-                            <i class="fab fa-twitter text-xl"></i>
-                        </a>
-                    </div>
-                    <p class="text-gray-400 text-sm mt-4">Created by <a href="https://github.com/mini-page" target="_blank" class="text-purple-400 hover:underline">Raghavan</a></p>
-                </div>
-            </div>
-            
-            <div class="border-t border-slate-800 pt-8 text-center text-gray-400 text-sm">
-                <p>&copy; 2024 TheSecretJuice. Released under MIT License.</p>
-                <p class="mt-2">Making CLI tools feel like 2030 💉✨</p>
-            </div>
+        <a href="module.html?name=nav-enhance" class="btn btn-secondary" style="display: inline-block; width: 100%; text-align: center;">
+          <i class="fas fa-book"></i> View Docs
+        </a>
+      </div>
+      
+      <!-- robocopy-enhance -->
+      <div class="card">
+        <div style="font-size: 3rem; margin-bottom: 1rem;">
+          <i class="fas fa-copy" style="background: var(--gradient-primary); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
         </div>
-    </footer>
+        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem;">robocopy-enhance</h3>
+        <p style="color: var(--text-dim); margin-bottom: 1rem;">Smart file copying with presets, logging, scheduling</p>
+        <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+          <span class="badge badge-primary">robocopy</span>
+          <span class="badge badge-primary">robo-mirror</span>
+          <span class="badge badge-primary">robo-backup</span>
+        </div>
+        <a href="module.html?name=robocopy-enhance" class="btn btn-secondary" style="display: inline-block; width: 100%; text-align: center;">
+          <i class="fas fa-book"></i> View Docs
+        </a>
+      </div>
+    </div>
+  </section>
 
-    <!-- Scripts -->
-    <script>
-        // Copy install command
-        function copyInstallCommand() {
-            const command = document.getElementById('installCommand').textContent;
-            navigator.clipboard.writeText(command).then(() => {
-                const btn = document.getElementById('copyBtn');
-                btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                setTimeout(() => {
-                    btn.innerHTML = 'Copy';
-                }, 2000);
-            });
-        }
-        
-        // Smooth scroll for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-            });
-        });
-        
-        // Navbar background on scroll
-        const nav = document.querySelector('nav');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 50) {
-                nav.classList.add('shadow-lg');
-            } else {
-                nav.classList.remove('shadow-lg');
-            }
-        });
-        
-        // Animate elements on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-        
-        // Observe all feature cards
-        document.querySelectorAll('.feature-card, .tool-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(20px)';
-            card.style.transition = 'all 0.6s ease-out';
-            observer.observe(card);
-        });
-    </script>
+
+  <!-- Quick Start -->
+  <section style="max-width: 900px; margin: 4rem auto; padding: 0 2rem;">
+    <h2 style="font-size: 2.5rem; font-weight: 900; text-align: center; margin-bottom: 3rem;">
+      <span class="gradient-text">Quick Start</span>
+    </h2>
+    
+    <div class="glass" style="padding: 2rem;">
+      <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem;">
+        <i class="fas fa-bolt" style="color: var(--warning);"></i> One Command Installation
+      </h3>
+      <div class="code-block">
+        <pre><code>iwr https://raw.githubusercontent.com/mini-page/TheSecretJuice/main/install.ps1 | iex</code></pre>
+      </div>
+      
+      <p style="margin-top: 1.5rem; color: var(--text-dim);">Then reload your profile:</p>
+      <div class="code-block">
+        <pre><code>. $PROFILE</code></pre>
+      </div>
+      
+      <p style="margin-top: 1.5rem; color: var(--success); font-weight: 600;">
+        <i class="fas fa-check-circle"></i> Done! Start using your enhanced tools.
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="https://github.com/mini-page/TheSecretJuice" target="_blank">
+          <i class="fab fa-github"></i> GitHub
+        </a>
+        <a href="https://github.com/mini-page/TheSecretJuice/issues" target="_blank">
+          <i class="fas fa-bug"></i> Report Issue
+        </a>
+        <a href="contribute.html">
+          <i class="fas fa-heart"></i> Contribute
+        </a>
+        <a href="https://github.com/mini-page" target="_blank">
+          <i class="fas fa-user"></i> mini-page
+        </a>
+      </div>
+      <p class="footer-copyright">
+        © 2025 TheSecretJuice. MIT License. Built with ❤️ for the CLI community.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/app.js"></script>
 </body>
 </html>
