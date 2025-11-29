@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://mini-page.github.io/TheSecretJuice/sitemap.xml
+
+# Disallow assets (but allow crawling for SEO)
+Allow: /assets/
+
+# Allow all HTML pages
+Allow: /*.html
+
+# Crawl delay (be nice to servers)
+Crawl-delay: 1

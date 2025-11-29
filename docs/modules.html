@@ -3,7 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Browse all TheSecretJuice enhancement modules - Interactive PowerShell wrappers for CLI tools">
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Browse all TheSecretJuice enhancement modules - Interactive PowerShell wrappers for yt-dlp, robocopy, navigation, and more CLI tools.">
+  <meta name="keywords" content="PowerShell modules, CLI enhancements, yt-dlp wrapper, robocopy interactive, zoxide navigation, eza listing, command-line tools">
+  <meta name="author" content="mini-page">
+  <meta name="robots" content="index, follow">
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://mini-page.github.io/TheSecretJuice/modules.html">
+  <meta property="og:title" content="Modules - TheSecretJuice">
+  <meta property="og:description" content="Browse all available PowerShell enhancement modules. Transform CLI tools into interactive experiences.">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://mini-page.github.io/TheSecretJuice/modules.html">
+  
   <title>Modules - TheSecretJuice</title>
   
   <script src="https://cdn.tailwindcss.com"></script>
@@ -89,13 +104,21 @@
   </footer>
 
   <!-- Scripts -->
+  <script src="assets/js/security.js"></script>
   <script src="assets/js/app.js"></script>
   <script>
-    // Load and display modules
-    document.addEventListener('DOMContentLoaded', async () => {
+    // Load and display modules on this page
+    async function initModulesPage() {
       const modules = await loadModules();
       displayModules(modules);
-    });
+    }
+    
+    // Call when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initModulesPage);
+    } else {
+      initModulesPage();
+    }
   </script>
 </body>
 </html>

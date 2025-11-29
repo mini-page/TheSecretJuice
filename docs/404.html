@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Page not found - TheSecretJuice documentation">
+  <meta name="robots" content="noindex, nofollow">
+  
+  <title>404 - Page Not Found | TheSecretJuice</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/scrollbar.css">
+  
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💉</text></svg>">
+  
+  <style>
+    .glitch {
+      position: relative;
+      font-size: 8rem;
+      font-weight: 900;
+      line-height: 1;
+      color: var(--text);
+      animation: glitch 1s linear infinite;
+    }
+    
+    @keyframes glitch {
+      2%, 64% {
+        transform: translate(2px, 0) skew(0deg);
+      }
+      4%, 60% {
+        transform: translate(-2px, 0) skew(0deg);
+      }
+      62% {
+        transform: translate(0, 0) skew(5deg);
+      }
+    }
+    
+    .glitch:before,
+    .glitch:after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    
+    .glitch:before {
+      left: 2px;
+      text-shadow: -2px 0 var(--accent);
+      clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-anim 5s infinite linear alternate-reverse;
+    }
+    
+    .glitch:after {
+      left: -2px;
+      text-shadow: -2px 0 var(--secondary);
+      clip: rect(44px, 450px, 56px, 0);
+      animation: glitch-anim2 5s infinite linear alternate-reverse;
+    }
+    
+    @keyframes glitch-anim {
+      0% { clip: rect(10px, 9999px, 31px, 0); }
+      20% { clip: rect(70px, 9999px, 71px, 0); }
+      40% { clip: rect(90px, 9999px, 140px, 0); }
+      60% { clip: rect(50px, 9999px, 100px, 0); }
+      80% { clip: rect(10px, 9999px, 85px, 0); }
+      100% { clip: rect(40px, 9999px, 95px, 0); }
+    }
+    
+    @keyframes glitch-anim2 {
+      0% { clip: rect(65px, 9999px, 119px, 0); }
+      20% { clip: rect(40px, 9999px, 66px, 0); }
+      40% { clip: rect(20px, 9999px, 59px, 0); }
+      60% { clip: rect(96px, 9999px, 100px, 0); }
+      80% { clip: rect(68px, 9999px, 105px, 0); }
+      100% { clip: rect(10px, 9999px, 130px, 0); }
+    }
+    
+    .floating {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+    
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--primary);
+      border-radius: 50%;
+      opacity: 0.6;
+      animation: particles 20s linear infinite;
+    }
+    
+    @keyframes particles {
+      0% {
+        transform: translateY(0) translateX(0) scale(1);
+        opacity: 0.6;
+      }
+      100% {
+        transform: translateY(-100vh) translateX(100px) scale(0);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body style="overflow-x: hidden;">
+  
+  <!-- Animated Background Particles -->
+  <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none;">
+    <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+    <div class="particle" style="left: 40%; animation-delay: 1s;"></div>
+    <div class="particle" style="left: 50%; animation-delay: 3s;"></div>
+    <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
+    <div class="particle" style="left: 70%; animation-delay: 2.5s;"></div>
+    <div class="particle" style="left: 80%; animation-delay: 4.5s;"></div>
+    <div class="particle" style="left: 90%; animation-delay: 1.5s;"></div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-brand">
+        <span class="navbar-icon">💉</span>
+        <span class="gradient-text">TheSecretJuice</span>
+      </a>
+      <ul class="navbar-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="modules.html">Modules</a></li>
+        <li><a href="installation.html">Installation</a></li>
+        <li><a href="contribute.html">Contribute</a></li>
+        <li><a href="https://github.com/mini-page/TheSecretJuice" target="_blank">
+          <i class="fab fa-github"></i> GitHub
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 404 Content -->
+  <div style="min-height: 80vh; display: flex; align-items: center; justify-content: center; padding: 2rem;">
+    <div style="text-align: center; max-width: 800px; margin: 0 auto;">
+      
+      <!-- Floating Icon -->
+      <div class="floating" style="font-size: 6rem; margin-bottom: 2rem;">
+        💉
+      </div>
+      
+      <!-- Glitch 404 -->
+      <h1 class="glitch" data-text="404">404</h1>
+      
+      <!-- Error Message -->
+      <div style="margin: 3rem 0;">
+        <h2 style="font-size: 2.5rem; font-weight: 700; margin-bottom: 1rem;">
+          <span class="gradient-text">Page Not Found</span>
+        </h2>
+        <p style="font-size: 1.25rem; color: var(--text-dim); margin-bottom: 2rem;">
+          Oops! The page you're looking for doesn't exist or has been moved.
+        </p>
+      </div>
+
+      <!-- Suggestions -->
+      <div class="glass" style="padding: 2rem; margin-bottom: 2rem; text-align: left;">
+        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: var(--text);">
+          <i class="fas fa-lightbulb" style="color: var(--warning);"></i> What you can do:
+        </h3>
+        <ul style="color: var(--text-dim); line-height: 2; list-style: none; padding: 0;">
+          <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+            <i class="fas fa-home" style="color: var(--primary);"></i>
+            Go back to the <a href="index.html" style="color: var(--secondary); text-decoration: underline;">homepage</a>
+          </li>
+          <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+            <i class="fas fa-search" style="color: var(--primary);"></i>
+            Browse all <a href="modules.html" style="color: var(--secondary); text-decoration: underline;">modules</a>
+          </li>
+          <li style="display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem;">
+            <i class="fas fa-download" style="color: var(--primary);"></i>
+            Check the <a href="installation.html" style="color: var(--secondary); text-decoration: underline;">installation guide</a>
+          </li>
+          <li style="display: flex; align-items: center; gap: 0.75rem;">
+            <i class="fab fa-github" style="color: var(--primary);"></i>
+            Visit the <a href="https://github.com/mini-page/TheSecretJuice" target="_blank" style="color: var(--secondary); text-decoration: underline;">GitHub repository</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Quick Search -->
+      <div style="margin-bottom: 2rem;">
+        <h3 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 1rem; color: var(--text);">
+          <i class="fas fa-compass" style="color: var(--accent);"></i> Or search for a module:
+        </h3>
+        <div class="search-container" style="max-width: 500px; margin: 0 auto;">
+          <input 
+            type="text" 
+            id="quickSearch" 
+            class="search-input" 
+            placeholder="Search modules, commands..."
+          >
+          <i class="fas fa-search search-icon"></i>
+        </div>
+        <div id="searchResults" style="margin-top: 1rem;"></div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="index.html" class="btn btn-primary">
+          <i class="fas fa-home"></i> Go Home
+        </a>
+        <a href="modules.html" class="btn btn-outline">
+          <i class="fas fa-puzzle-piece"></i> Browse Modules
+        </a>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-links">
+        <a href="https://github.com/mini-page/TheSecretJuice" target="_blank">
+          <i class="fab fa-github"></i> GitHub
+        </a>
+        <a href="https://github.com/mini-page/TheSecretJuice/issues" target="_blank">
+          <i class="fas fa-bug"></i> Report Issue
+        </a>
+        <a href="contribute.html">
+          <i class="fas fa-heart"></i> Contribute
+        </a>
+      </div>
+      <p class="footer-copyright">
+        © 2025 TheSecretJuice. MIT License.
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="assets/js/app.js"></script>
+  <script>
+    // Quick search functionality on 404 page
+    document.getElementById('quickSearch').addEventListener('input', async (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      const resultsContainer = document.getElementById('searchResults');
+      
+      if (!query) {
+        resultsContainer.innerHTML = '';
+        return;
+      }
+      
+      // Load modules
+      const response = await fetch('assets/data/modules.json');
+      const modules = await response.json();
+      
+      // Filter modules
+      const filtered = modules.filter(module => 
+        module.name.toLowerCase().includes(query) ||
+        module.description.toLowerCase().includes(query) ||
+        module.keywords.some(k => k.toLowerCase().includes(query)) ||
+        module.commands.some(c => c.toLowerCase().includes(query))
+      );
+      
+      if (filtered.length === 0) {
+        resultsContainer.innerHTML = `
+          <p style="color: var(--text-dimmer); margin-top: 1rem;">No modules found</p>
+        `;
+        return;
+      }
+      
+      resultsContainer.innerHTML = `
+        <div style="display: grid; gap: 0.75rem; margin-top: 1rem;">
+          ${filtered.map(m => `
+            <a href="module.html?name=${encodeURIComponent(m.name)}" 
+               style="display: flex; align-items: center; gap: 1rem; padding: 1rem; background: var(--bg-card); border-radius: 8px; border: 1px solid var(--border); transition: all 0.3s ease;"
+               onmouseover="this.style.borderColor='var(--primary)'; this.style.transform='translateX(4px)';"
+               onmouseout="this.style.borderColor='var(--border)'; this.style.transform='translateX(0)';">
+              <i class="fas ${m.icon}" style="font-size: 2rem; color: var(--primary);"></i>
+              <div style="flex: 1; text-align: left;">
+                <div style="font-weight: 600; color: var(--text); margin-bottom: 0.25rem;">${m.name}</div>
+                <div style="font-size: 0.875rem; color: var(--text-dim);">${m.description.substring(0, 80)}...</div>
+              </div>
+              <i class="fas fa-arrow-right" style="color: var(--text-dimmer);"></i>
+            </a>
+          `).join('')}
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>

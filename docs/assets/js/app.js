@@ -19,6 +19,13 @@ async function loadModules() {
 // Initialize app
 document.addEventListener('DOMContentLoaded', async () => {
   await loadModules();
+  
+  // Auto-display modules if on modules page
+  const modulesContainer = document.getElementById('modulesContainer');
+  if (modulesContainer && modulesData.length > 0) {
+    displayModules(modulesData);
+  }
+  
   initSearch();
   initMobileMenu();
   highlightCurrentPage();
@@ -30,7 +37,17 @@ function initSearch() {
   if (!searchInput) return;
 
   searchInput.addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase();
+    // Rate limiting check
+    if (typeof rateLimiter !== 'undefined' && !rateLimiter.canMakeRequest()) {
+      return;
+    }
+    
+    // Sanitize and validate input
+    const rawQuery = e.target.value;
+    const query = typeof validateSearchInput !== 'undefined' 
+      ? validateSearchInput(rawQuery).toLowerCase()
+      : rawQuery.toLowerCase().replace(/[<>]/g, '');
+    
     searchModules(query);
   });
 }
@@ -76,17 +93,31 @@ function displayAllModules() {
 }
 
 function createModuleCard(module) {
+  // Sanitize all user-facing content
+  const safeName = typeof sanitizeHTML !== 'undefined' 
+    ? sanitizeHTML(module.name)
+    : module.name.replace(/[<>]/g, '');
+  const safeDescription = typeof sanitizeHTML !== 'undefined'
+    ? sanitizeHTML(module.description)
+    : module.description.replace(/[<>]/g, '');
+  const safeCategory = typeof sanitizeHTML !== 'undefined'
+    ? sanitizeHTML(module.category)
+    : module.category.replace(/[<>]/g, '');
+  const safeIcon = typeof sanitizeAttribute !== 'undefined'
+    ? sanitizeAttribute(module.icon)
+    : module.icon.replace(/['"<>]/g, '');
+    
   return `
-    <div class="module-card fade-in" onclick="navigateToModule('${module.name}')">
+    <div class="module-card fade-in" onclick="navigateToModule('${safeName}')">
       <div class="module-icon">
-        <i class="fas ${module.icon}"></i>
+        <i class="fas ${safeIcon}"></i>
       </div>
-      <h3 class="module-title">${module.name}</h3>
-      <p class="module-description">${module.description}</p>
+      <h3 class="module-title">${safeName}</h3>
+      <p class="module-description">${safeDescription}</p>
       <div class="module-meta">
         <span class="module-category">
           <i class="fas fa-tag"></i>
-          ${module.category}
+          ${safeCategory}
         </span>
         <span class="badge badge-outline" style="color: var(--secondary);">
           ${module.commands.length} commands
@@ -97,7 +128,11 @@ function createModuleCard(module) {
 }
 
 function navigateToModule(moduleName) {
-  window.location.href = `module.html?name=${encodeURIComponent(moduleName)}`;
+  // Sanitize module name before navigation
+  const safeName = typeof sanitizeAttribute !== 'undefined'
+    ? sanitizeAttribute(moduleName)
+    : moduleName.replace(/['"<>&]/g, '');
+  window.location.href = `module.html?name=${encodeURIComponent(safeName)}`;
 }
 
 // Mobile menu toggle
