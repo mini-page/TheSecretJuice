@@ -7,23 +7,61 @@ let currentFilter = 'all';
 // Load modules data
 async function loadModules() {
   try {
-    const response = await fetch('assets/data/modules.json');
+    // Try relative path first, then absolute from root
+    let response;
+    try {
+      response = await fetch('assets/data/modules.json');
+    } catch (e) {
+      response = await fetch('/assets/data/modules.json');
+    }
+    
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
     modulesData = await response.json();
+    console.log('Modules loaded successfully:', modulesData.length);
     return modulesData;
   } catch (error) {
     console.error('Error loading modules:', error);
+    // Try to show user-friendly error
+    const container = document.getElementById('modulesContainer');
+    if (container) {
+      container.innerHTML = `
+        <div style="grid-column: 1 / -1; padding: 4rem; text-align: center;">
+          <i class="fas fa-exclamation-circle" style="font-size: 3rem; color: var(--error); margin-bottom: 1rem;"></i>
+          <h3 style="color: var(--text);">Failed to Load Modules</h3>
+          <p style="color: var(--text-dim); margin: 1rem 0;">Error: ${error.message}</p>
+          <p style="color: var(--text-dimmer);">Please check the browser console for details.</p>
+        </div>
+      `;
+    }
     return [];
   }
 }
 
 // Initialize app
 document.addEventListener('DOMContentLoaded', async () => {
+  // Show loading indicator
+  const modulesContainer = document.getElementById('modulesContainer');
+  if (modulesContainer) {
+    modulesContainer.innerHTML = `
+      <div style="grid-column: 1 / -1; padding: 4rem; text-align: center;">
+        <i class="fas fa-spinner fa-spin" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+        <h3 style="color: var(--text);">Loading modules...</h3>
+      </div>
+    `;
+  }
+  
+  // Load modules
   await loadModules();
   
   // Auto-display modules if on modules page
-  const modulesContainer = document.getElementById('modulesContainer');
   if (modulesContainer && modulesData.length > 0) {
+    console.log('Displaying modules:', modulesData.length);
     displayModules(modulesData);
+  } else if (modulesContainer && modulesData.length === 0) {
+    console.error('No modules data loaded!');
   }
   
   initSearch();

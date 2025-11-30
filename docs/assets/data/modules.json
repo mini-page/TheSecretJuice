@@ -1,0 +1,95 @@
+[
+  {
+    "name": "yt-dlp-enhance",
+    "description": "Interactive PowerShell wrapper for yt-dlp with cookie support, download archive, VLC streaming, and smart error detection. Download videos and audio from YouTube and other platforms with an intuitive menu system.",
+    "path": "Steroids/yt-dlp-enhance.ps1",
+    "category": "Media & Download",
+    "keywords": ["youtube", "download", "video", "audio", "mp3", "cookies", "streaming", "vlc", "yt-dlp"],
+    "icon": "fa-video",
+    "commands": ["yt-dlp", "yt-video", "yt-audio", "yt-playlist", "yt-cookies", "yt-defaults", "yt-help", "yt-reset-settings"],
+    "features": [
+      "Browser cookie extraction (Chrome/Firefox/Edge)",
+      "Download archive tracking",
+      "VLC streaming support",
+      "User-agent spoofing",
+      "Smart error detection",
+      "Settings memory",
+      "Quality selection",
+      "Playlist support"
+    ]
+  },
+  {
+    "name": "nav-enhance",
+    "description": "Supercharged navigation and directory listing for PowerShell using zoxide and eza. Features smart jumping, bookmarks, fuzzy search, and beautiful file listings with icons and git integration.",
+    "path": "Steroids/nav-enhance.ps1",
+    "category": "Navigation & Files",
+    "keywords": ["navigation", "directory", "listing", "zoxide", "eza", "fuzzy", "bookmarks", "tree", "git"],
+    "icon": "fa-compass",
+    "commands": ["zz", "zi", "zc", "ze", "zn", "zx", "z-", "ll", "la", "lt", "ltt", "ld", "lz", "lm", "lc", "ldo", "lf", "lcode", "lmedia", "ldoc", "lr", "lbig", "lg", "bm", "bm-add", "bm-list", "bm-rm", "pj", "fn", "lst", "nav-help"],
+    "features": [
+      "Interactive fuzzy directory jump",
+      "Bookmark system",
+      "Enhanced listings with icons",
+      "Tree views (2-4 levels deep)",
+      "Git status integration",
+      "File type filtering",
+      "Sort by size/time/created",
+      "VSCode/Explorer integration"
+    ]
+  },
+  {
+    "name": "robocopy-enhance",
+    "description": "Interactive PowerShell wrapper for robocopy with smart presets, logging, exclusion filters, and advanced utilities. Schedule backups, watch folders, and manage file copying with ease.",
+    "path": "Steroids/robocopy-enhance.ps1",
+    "category": "File Management",
+    "keywords": ["robocopy", "backup", "sync", "mirror", "files", "copy", "schedule", "watch", "logging"],
+    "icon": "fa-copy",
+    "commands": ["robocopy", "robo-mirror", "robo-backup", "robo-sync", "robo-fast", "robo-verify", "robo-diff", "robo-stats", "robo-schedule", "robo-watch", "robo-reset-settings", "robo-help"],
+    "features": [
+      "6 smart presets (Mirror, Sync, Backup, Fast, Verify, Incremental)",
+      "Optional file logging with timestamps",
+      "Pre-built exclusion filters",
+      "Settings memory",
+      "Directory comparison",
+      "Scheduled backup tasks",
+      "Watch mode for continuous sync",
+      "Dry run preview"
+    ]
+  },
+  {
+    "name": "cipher-enhance",
+    "description": "Lightweight, fast PowerShell wrapper for Windows cipher.exe - Easy file and folder encryption/decryption using EFS (Encrypting File System). Includes secure deletion, encrypted archives, and key backup utilities.",
+    "path": "Steroids/cipher-enhance.ps1",
+    "category": "Security & Encryption",
+    "keywords": ["encryption", "decrypt", "security", "efs", "cipher", "secure delete", "privacy", "protect", "keys"],
+    "icon": "fa-lock",
+    "commands": ["cipher", "cipher-encrypt", "cipher-decrypt", "cipher-status", "cipher-wipe", "cipher-encrypt-folder", "cipher-decrypt-folder", "cipher-secure-encrypt", "cipher-list-encrypted", "cipher-stats", "cipher-backup-keys", "cipher-reset-settings", "cipher-help"],
+    "features": [
+      "EFS (Encrypting File System) encryption",
+      "Secure file deletion (3-pass or 7-pass DoD standard)",
+      "Recursive folder encryption",
+      "Password-protected ZIP archives (with 7-Zip)",
+      "Encryption status checking",
+      "Statistics and monitoring",
+      "EFS certificate backup assistant",
+      "Settings memory"
+    ]
+  },
+  {
+    "name": "install.ps1",
+    "description": "One-line installer script that downloads TheSecretJuice repository, installs all enhancement modules, configures PowerShell profile, and checks for required dependencies.",
+    "path": "install.ps1",
+    "category": "Installation",
+    "keywords": ["install", "setup", "configuration", "profile", "dependencies"],
+    "icon": "fa-download",
+    "commands": ["iwr https://raw.githubusercontent.com/mini-page/TheSecretJuice/main/install.ps1 | iex"],
+    "features": [
+      "One-line installation",
+      "Automatic profile configuration",
+      "Dependency checking",
+      "Cross-platform support (Windows/Linux/macOS)",
+      "Safe profile updates",
+      "Tool detection and download links"
+    ]
+  }
+]

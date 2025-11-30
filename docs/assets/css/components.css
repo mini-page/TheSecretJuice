@@ -18,6 +18,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
 }
 
 .navbar-brand {
@@ -27,10 +29,13 @@
   font-size: 1.5rem;
   font-weight: 700;
   color: var(--text);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .navbar-icon {
   font-size: 2rem;
+  flex-shrink: 0;
 }
 
 .navbar-nav {
@@ -38,12 +43,14 @@
   gap: 2rem;
   align-items: center;
   list-style: none;
+  flex-wrap: wrap;
 }
 
 .navbar-nav a {
   color: var(--text-dim);
   font-weight: 500;
   transition: color 0.3s ease;
+  white-space: nowrap;
 }
 
 .navbar-nav a:hover {
@@ -304,6 +311,14 @@
   .hero-title {
     font-size: 3rem;
   }
+  
+  .navbar-nav {
+    gap: 1rem;
+  }
+  
+  .navbar-container {
+    padding: 0 1rem;
+  }
 }
 
 @media (max-width: 768px) {
@@ -313,6 +328,15 @@
 
   .navbar-nav {
     gap: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .navbar-brand {
+    font-size: 1.25rem;
+  }
+  
+  .navbar-icon {
+    font-size: 1.5rem;
   }
 
   .hero {
@@ -330,6 +354,10 @@
   .feature-grid {
     grid-template-columns: 1fr;
   }
+  
+  .module-card {
+    padding: 1.25rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -339,5 +367,18 @@
 
   .module-card {
     padding: 1rem;
+  }
+  
+  .navbar-nav {
+    gap: 0.75rem;
+    font-size: 0.85rem;
+  }
+  
+  .navbar-brand {
+    font-size: 1.1rem;
+  }
+  
+  .navbar-nav a {
+    padding: 0.25rem 0.5rem;
   }
 }

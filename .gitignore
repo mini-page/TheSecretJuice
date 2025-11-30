@@ -1,11 +1,18 @@
-# Ignore Genkit directory
-.genkit/
-
-# ignore all .log files
+.git
+.vscode
 *.log
-
-# ignore all .json settings
-*.json
-
-# ignore all .qodo settings
-*.qodo
+*.bak
+*.tmp
+node_modules
+.DS_Store
+Thumbs.db
+.env
+*.swp
+*~
+docs/TESTING_CHECKLIST.md
+docs/QUICK_TEST_GUIDE.md
+docs/VISUAL_TESTING_ISSUES.md
+docs/FIXES_APPLIED.md
+docs/COMPLETE_SUMMARY.md
+docs/FINAL_REPORT.md
+docs/CIPHER_ENHANCE_COMPLETE.md
