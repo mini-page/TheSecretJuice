@@ -16,7 +16,7 @@ Transform boring CLI tools into interactive, colorful, user-friendly experiences
 - 💾 **Settings memory** - Save your preferences, skip repetitive prompts
 - 🌈 **Beautiful UI** - Colorful, emoji-rich interfaces
 
-## 🚀 Quick Install
+## 🚀 Quick Install and free
 
 **One command to rule them all:**
 
