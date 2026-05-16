@@ -2,6 +2,11 @@
 # Enhanced yt-dlp PowerShell wrapper with cookie support, download archive, and settings memory
 # Part of TheSecretJuice by mini-page
 
+if ($null -eq (Get-Command Show-JuiceHelp -ErrorAction SilentlyContinue)) {
+    $helperPath = Join-Path $PSScriptRoot "Core\Juice-Helpers.ps1"
+    if (Test-Path $helperPath) { . $helperPath }
+}
+
 # Settings file location
 $settingsFile = "$env:USERPROFILE\.ytdlp-settings.json"
 
@@ -717,26 +722,17 @@ function yt-reset-settings {
 
 # Help function
 function yt-help {
-    Write-Host "`nYT-DLP QUICK REFERENCE" -ForegroundColor Magenta
-    Write-Host "═════════════════════════════════════════════════" -ForegroundColor DarkGray
-    Write-Host "  yt-dlp [url]          " -NoNewline -ForegroundColor Green
-    Write-Host "Interactive mode" -ForegroundColor Gray
-    Write-Host "  yt-defaults [url]     " -NoNewline -ForegroundColor Green
-    Write-Host "Quick download (no prompts)" -ForegroundColor Gray
-    Write-Host "  yt-video [url]        " -NoNewline -ForegroundColor Green
-    Write-Host "Download best video" -ForegroundColor Gray
-    Write-Host "  yt-audio [url]        " -NoNewline -ForegroundColor Green
-    Write-Host "Extract audio as MP3" -ForegroundColor Gray
-    Write-Host "  yt-playlist [url]     " -NoNewline -ForegroundColor Green
-    Write-Host "Download playlist (with archive)" -ForegroundColor Gray
-    Write-Host "  yt-cookies [url]      " -NoNewline -ForegroundColor Green
-    Write-Host "Download with browser cookies" -ForegroundColor Gray
-    Write-Host "  yt-reset-settings     " -NoNewline -ForegroundColor Green
-    Write-Host "Clear saved settings" -ForegroundColor Gray
-    Write-Host "═════════════════════════════════════════════════" -ForegroundColor DarkGray
-    Write-Host "`nINFO: Settings are saved automatically!" -ForegroundColor Cyan
-    Write-Host "   Next time: Choose 'Use saved settings' to skip prompts`n" -ForegroundColor Gray
+    $cmds = @(
+        @{ Cmd="yt-dlp"; Desc="Interactive mode" },
+        @{ Cmd="yt-video"; Desc="Quick download" },
+        @{ Cmd="yt-audio"; Desc="MP3 only" },
+        @{ Cmd="yt-cookies"; Desc="Setup cookies" },
+        @{ Cmd="yt-reset-settings"; Desc="Clear settings" },
+        @{ Cmd="yt-help"; Desc="Show this help menu" }
+    )
+    Show-JuiceHelp -Title "yt-dlp Steroids" -Commands $cmds
 }
+Set-Alias -Name "yt-help" -Value yt-help
 
 Write-Host "OK. yt-dlp-enhance loaded! " -ForegroundColor Green -NoNewline
 Write-Host "Type 'yt-help' for commands" -ForegroundColor Cyan

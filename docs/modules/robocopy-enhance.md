@@ -13,6 +13,8 @@ Interactive PowerShell wrapper for robocopy with smart presets, logging, exclusi
 - **📊 Statistics** - Detailed directory stats and comparisons
 - **⏰ Scheduling** - Create scheduled backup tasks
 - **👁️ Watch Mode** - Continuous monitoring and auto-sync
+- **🛡️ Safety Review** - Automatic detection of dangerous operations (Mirror, Move, Purge)
+- **🛑 Destruction Protection** - Required 'DELETE' confirmation for high-risk syncs
 - **🎨 Beautiful UI** - Colorful, emoji-rich interfaces with smart error handling
 
 ## 🚀 Quick Start

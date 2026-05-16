@@ -4,23 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- SEO Meta Tags -->
-  <meta name="description" content="Browse all TheSecretJuice enhancement modules - Interactive PowerShell wrappers for yt-dlp, robocopy, navigation, and more CLI tools.">
-  <meta name="keywords" content="PowerShell modules, CLI enhancements, yt-dlp wrapper, robocopy interactive, zoxide navigation, eza listing, command-line tools">
-  <meta name="author" content="mini-page">
-  <meta name="robots" content="index, follow">
-  
-  <!-- Open Graph -->
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://mini-page.github.io/TheSecretJuice/modules.html">
-  <meta property="og:title" content="Modules - TheSecretJuice">
-  <meta property="og:description" content="Browse all available PowerShell enhancement modules. Transform CLI tools into interactive experiences.">
-  
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://mini-page.github.io/TheSecretJuice/modules.html">
+  <meta name="description" content="Explore TheSecretJuice modules and Juice Packs. Interactive PowerShell steroids for your CLI workflow.">
+  <meta name="keywords" content="PowerShell modules, CLI enhancements, terminal tools, developer productivity">
   
   <title>Modules - TheSecretJuice</title>
-  
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="assets/css/main.css">
@@ -29,8 +16,6 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💉</text></svg>">
 </head>
 <body>
-  
-  <!-- Navbar -->
   <nav class="navbar">
     <div class="navbar-container">
       <a href="index.html" class="navbar-brand">
@@ -49,75 +34,62 @@
     </div>
   </nav>
 
-
-  <!-- Page Header -->
-  <section style="max-width: 1400px; margin: 0 auto; padding: 4rem 2rem 2rem;">
-    <h1 style="font-size: 3rem; font-weight: 900; margin-bottom: 1rem;">
-      <span class="gradient-text">Enhancement Modules</span>
-    </h1>
-    <p style="color: var(--text-dim); font-size: 1.125rem; max-width: 800px;">
-      Browse all available PowerShell enhancement modules. Each module transforms a CLI tool into an interactive, user-friendly experience.
-    </p>
-  </section>
-
-  <!-- Search & Filter -->
-  <section style="max-width: 1400px; margin: 0 auto; padding: 0 2rem 2rem;">
-    <div class="search-container">
-      <input 
-        type="text" 
-        id="searchInput" 
-        class="search-input" 
-        placeholder="Search modules, commands, or keywords..."
-      >
-      <i class="fas fa-search search-icon"></i>
+  <div style="max-width: 1400px; margin: 0 auto; padding: 4rem 2rem;">
+    <div style="text-align: center; margin-bottom: 4rem;">
+      <h1 style="font-size: 3.5rem; font-weight: 900; margin-bottom: 1rem;">
+        Available <span class="gradient-text">Steroids</span>
+      </h1>
+      <p style="font-size: 1.25rem; color: var(--text-dim); max-width: 700px; margin: 0 auto;">
+        Browse our collection of standalone modules and bundled Juice Packs. 
+        Interactive, safe, and built for modern terminals.
+      </p>
     </div>
-  </section>
 
-  <!-- Modules Grid -->
-  <section style="max-width: 1400px; margin: 0 auto; padding: 0 2rem 4rem;">
-    <div id="modulesContainer" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 2rem;">
-      <!-- Modules will be loaded here dynamically -->
+    <!-- Search & Filter -->
+    <div class="glass" style="padding: 1.5rem; border-radius: 16px; margin-bottom: 3rem; display: flex; flex-wrap: wrap; gap: 1rem; align-items: center;">
+      <div style="flex: 1; position: relative; min-width: 300px;">
+        <i class="fas fa-search" style="position: absolute; left: 1.25rem; top: 50%; transform: translateY(-50%); color: var(--text-dimmer);"></i>
+        <input type="text" id="searchInput" placeholder="Search modules, packs, or commands..." 
+               style="width: 100%; background: rgba(0,0,0,0.3); border: 1px solid var(--border); border-radius: 10px; padding: 0.75rem 1rem 0.75rem 3rem; color: var(--text); outline: none; transition: border-color 0.3s;"
+               onfocus="this.style.borderColor='var(--primary)'" onblur="this.style.borderColor='var(--border)'">
+      </div>
+      <div style="display: flex; gap: 0.5rem;">
+        <button class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="filterModules('all')">All</button>
+        <button class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="filterModules('pack')">Packs Only</button>
+        <button class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.85rem;" onclick="filterModules('module')">Modules Only</button>
+      </div>
     </div>
-  </section>
 
-  <!-- Footer -->
+    <div id="modulesContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 2rem;">
+      <!-- Modules loaded by app.js -->
+    </div>
+  </div>
+
   <footer class="footer">
     <div class="footer-content">
       <div class="footer-links">
-        <a href="https://github.com/mini-page/TheSecretJuice" target="_blank">
-          <i class="fab fa-github"></i> GitHub
-        </a>
-        <a href="https://github.com/mini-page/TheSecretJuice/issues" target="_blank">
-          <i class="fas fa-bug"></i> Report Issue
-        </a>
-        <a href="contribute.html">
-          <i class="fas fa-heart"></i> Contribute
-        </a>
-        <a href="https://github.com/mini-page" target="_blank">
-          <i class="fas fa-user"></i> mini-page
-        </a>
+        <a href="https://github.com/mini-page/TheSecretJuice" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+        <a href="https://github.com/mini-page/TheSecretJuice/issues" target="_blank"><i class="fas fa-bug"></i> Report Issue</a>
       </div>
-      <p class="footer-copyright">
-        © 2025 TheSecretJuice. MIT License. Built with ❤️ for the CLI community.
-      </p>
+      <p class="footer-copyright">© 2025 TheSecretJuice. MIT License.</p>
     </div>
   </footer>
 
-  <!-- Scripts -->
   <script src="assets/js/security.js"></script>
   <script src="assets/js/app.js"></script>
   <script>
-    // Load and display modules on this page
-    async function initModulesPage() {
-      const modules = await loadModules();
-      displayModules(modules);
-    }
-    
-    // Call when DOM is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initModulesPage);
-    } else {
-      initModulesPage();
+    // Local filtering extension
+    function filterModules(type) {
+      const container = document.getElementById('modulesContainer');
+      let filtered = modulesData;
+      
+      if (type === 'pack') {
+        filtered = modulesData.filter(m => m.isPack === true);
+      } else if (type === 'module') {
+        filtered = modulesData.filter(m => m.isPack !== true);
+      }
+      
+      displayModules(filtered);
     }
   </script>
 </body>

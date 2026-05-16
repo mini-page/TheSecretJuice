@@ -190,6 +190,31 @@ a:hover {
   border: 1px solid currentColor;
 }
 
+/* Pack Specific Styles */
+.badge-pack {
+  display: inline-block;
+  background: var(--gradient-primary);
+  color: white;
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-left: 0.5rem;
+}
+
+.pack-card {
+  border: 2px solid transparent !important;
+  background-image: linear-gradient(var(--bg-card), var(--bg-card)), var(--gradient-primary);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+.pack-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(233, 30, 99, 0.2);
+}
+
 /* Animations */
 @keyframes fadeIn {
   from {

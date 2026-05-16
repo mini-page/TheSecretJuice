@@ -130,7 +130,17 @@ function displayAllModules() {
   displayModules(modulesData);
 }
 
+function navigateToModule(moduleName, isPack = false) {
+  // Sanitize module name before navigation
+  const safeName = typeof sanitizeAttribute !== 'undefined'
+    ? sanitizeAttribute(moduleName)
+    : moduleName.replace(/['"<>&]/g, '');
+  const typeParam = isPack ? '&type=pack' : '&type=module';
+  window.location.href = `module.html?name=${encodeURIComponent(safeName)}${typeParam}`;
+}
+
 function createModuleCard(module) {
+  const isPack = module.isPack === true;
   // Sanitize all user-facing content
   const safeName = typeof sanitizeHTML !== 'undefined' 
     ? sanitizeHTML(module.name)
@@ -145,12 +155,16 @@ function createModuleCard(module) {
     ? sanitizeAttribute(module.icon)
     : module.icon.replace(/['"<>]/g, '');
     
+  const cmdCount = isPack 
+    ? module.modules.reduce((sum, m) => sum + (m.commands ? m.commands.length : 0), 0)
+    : (module.commands ? module.commands.length : 0);
+
   return `
-    <div class="module-card fade-in" onclick="navigateToModule('${safeName}')">
+    <div class="module-card fade-in ${isPack ? 'pack-card' : ''}" onclick="navigateToModule('${safeName}', ${isPack})">
       <div class="module-icon">
         <i class="fas ${safeIcon}"></i>
       </div>
-      <h3 class="module-title">${safeName}</h3>
+      <h3 class="module-title">${safeName}${isPack ? ' <span class="badge-pack">Pack</span>' : ''}</h3>
       <p class="module-description">${safeDescription}</p>
       <div class="module-meta">
         <span class="module-category">
@@ -158,19 +172,11 @@ function createModuleCard(module) {
           ${safeCategory}
         </span>
         <span class="badge badge-outline" style="color: var(--secondary);">
-          ${module.commands.length} commands
+          ${cmdCount} commands
         </span>
       </div>
     </div>
   `;
-}
-
-function navigateToModule(moduleName) {
-  // Sanitize module name before navigation
-  const safeName = typeof sanitizeAttribute !== 'undefined'
-    ? sanitizeAttribute(moduleName)
-    : moduleName.replace(/['"<>&]/g, '');
-  window.location.href = `module.html?name=${encodeURIComponent(safeName)}`;
 }
 
 // Mobile menu toggle

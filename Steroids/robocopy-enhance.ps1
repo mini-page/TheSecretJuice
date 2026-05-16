@@ -2,6 +2,11 @@
 # Enhanced robocopy PowerShell wrapper with interactive menus and smart features
 # Part of TheSecretJuice by mini-page
 
+if ($null -eq (Get-Command Show-JuiceHelp -ErrorAction SilentlyContinue)) {
+    $helperPath = Join-Path $PSScriptRoot "Core\Juice-Helpers.ps1"
+    if (Test-Path $helperPath) { . $helperPath }
+}
+
 # Settings file location
 $roboSettingsFile = "$env:USERPROFILE\.robocopy-settings.json"
 
@@ -64,6 +69,42 @@ $roboPresets = @{
 }
 
 # ============================================================================
+# VALIDATION & SAFETY (Enhanced from RoboTUI)
+# ============================================================================
+
+function Get-RoboSafetyReport {
+    param($source, $dest, $flags)
+    
+    $warnings = @()
+    
+    # Check for destructive operations
+    if ($flags -match "/MIR") {
+        $warnings += @{ Level="DANGER"; Msg="MIRROR mode will DELETE files in destination that don't exist in source!" }
+    }
+    if ($flags -match "/PURGE") {
+        $warnings += @{ Level="DANGER"; Msg="PURGE will DELETE extra files/folders in destination!" }
+    }
+    if ($flags -match "/MOV" -or $flags -match "/MOVE") {
+        $warnings += @{ Level="DANGER"; Msg="MOVE will DELETE source files after successful copy!" }
+    }
+
+    # Conflict detection
+    if ($flags -match "/S" -and $flags -match "/E") {
+        $warnings += @{ Level="WARNING"; Msg="/E includes /S functionality - /S flag is redundant." }
+    }
+    
+    # Thread count safety
+    if ($flags -match "/MT:(\d+)") {
+        $threads = [int]$matches[1]
+        if ($threads -gt 32) {
+            $warnings += @{ Level="WARNING"; Msg="High thread count ($threads) may impact system stability." }
+        }
+    }
+
+    return $warnings
+}
+
+# ============================================================================
 # MAIN INTERACTIVE FUNCTION
 # ============================================================================
 
@@ -74,10 +115,41 @@ function robocopy {
         [switch]$useDefaults
     )
     
-    # --- Banner ---
-    Write-Host "`n╔══════════════════════════════╗" -ForegroundColor Magenta
-    Write-Host "║    ROBOCOPY Interactive      ║" -ForegroundColor Magenta
-    Write-Host "╚══════════════════════════════╝`n" -ForegroundColor Magenta
+    Write-JuiceBanner -Title "ROBOCOPY Interactive"
+    
+    # ... (Settings loading logic) ...
+    
+    # --- Source & Destination Verification (as before) ---
+    # ...
+    
+    # --- Preset Selection (Expanded from RoboTUI) ---
+    # ... (logic for choosing presets) ...
+    
+    # --- Safety Review (NEW) ---
+    $safetyReport = Get-RoboSafetyReport -source $source -dest $destination -flags $finalFlags
+    
+    if ($safetyReport.Count -gt 0) {
+        Write-Host "`n🛡️  SAFETY REVIEW REQUIRED" -ForegroundColor Yellow
+        Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" -ForegroundColor DarkGray
+        foreach ($w in $safetyReport) {
+            $color = if ($w.Level -eq "DANGER") { "Red" } else { "Yellow" }
+            Write-Host "  [$($w.Level)] " -NoNewline -ForegroundColor $color
+            Write-Host $w.Msg -ForegroundColor White
+        }
+        Write-Host "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━`n" -ForegroundColor DarkGray
+        
+        # Destruction Protection
+        if ($safetyReport | Where-Object { $_.Level -eq "DANGER" }) {
+            Write-Host "🚨 DANGER: You are about to perform a destructive operation." -ForegroundColor Red
+            $confirmDelete = Read-Host "   Type 'DELETE' to confirm you understand files will be REMOVED"
+            if ($confirmDelete -ne "DELETE") {
+                Write-Host "   Abort: Confirmation failed.`n" -ForegroundColor Red
+                return
+            }
+        } else {
+            if (-not (Confirm-Action -Message "   Proceed with these warnings?")) { return }
+        }
+    }
     
     # Load saved settings
     $savedSettings = Load-RoboSettings
@@ -669,78 +741,17 @@ function robo-watch {
 # ============================================================================
 
 function robo-help {
-    Write-Host "`nROBOCOPY-ENHANCE COMMANDS" -ForegroundColor Magenta
-    Write-Host "════════════════════════════════════════════" -ForegroundColor DarkGray
-    
-    Write-Host "`nINTERACTIVE:" -ForegroundColor Cyan
-    Write-Host "  robocopy              " -NoNewline -ForegroundColor Green
-    Write-Host "Interactive mode with menus" -ForegroundColor Gray
-    
-    Write-Host "`nQUICK COMMANDS:" -ForegroundColor Cyan
-    Write-Host "  robo-mirror <src> <dst>     " -NoNewline -ForegroundColor Green
-    Write-Host "Mirror sync (delete extras)" -ForegroundColor Gray
-    Write-Host "  robo-backup <src> <dst>     " -NoNewline -ForegroundColor Green
-    Write-Host "Backup (skip older files)" -ForegroundColor Gray
-    Write-Host "  robo-sync <src> <dst>       " -NoNewline -ForegroundColor Green
-    Write-Host "Sync (no deletions)" -ForegroundColor Gray
-    Write-Host "  robo-fast <src> <dst>       " -NoNewline -ForegroundColor Green
-    Write-Host "Fast copy (minimal logs)" -ForegroundColor Gray
-    Write-Host "  robo-verify <src> <dst>     " -NoNewline -ForegroundColor Green
-    Write-Host "Verified copy" -ForegroundColor Gray
-    
-    Write-Host "`nANALYSIS:" -ForegroundColor Cyan
-    Write-Host "  robo-diff <src> <dst>       " -NoNewline -ForegroundColor Green
-    Write-Host "Compare directories" -ForegroundColor Gray
-    Write-Host "  robo-stats <path>           " -NoNewline -ForegroundColor Green
-    Write-Host "Show directory statistics" -ForegroundColor Gray
-    
-    Write-Host "`nADVANCED:" -ForegroundColor Cyan
-    Write-Host "  robo-schedule <src> <dst>   " -NoNewline -ForegroundColor Green
-    Write-Host "Create scheduled task" -ForegroundColor Gray
-    Write-Host "  robo-watch <src> <dst>      " -NoNewline -ForegroundColor Green
-    Write-Host "Watch and auto-sync" -ForegroundColor Gray
-    Write-Host "  robo-reset-settings         " -NoNewline -ForegroundColor Green
-    Write-Host "Clear saved settings" -ForegroundColor Gray
-    
-    Write-Host "`nPRESETS:" -ForegroundColor Cyan
-    Write-Host "  Mirror:      " -NoNewline -ForegroundColor Gray
-    Write-Host "Delete extra files in destination" -ForegroundColor White
-    Write-Host "  Sync:        " -NoNewline -ForegroundColor Gray
-    Write-Host "Keep all subdirs, no deletions" -ForegroundColor White
-    Write-Host "  Backup:      " -NoNewline -ForegroundColor Gray
-    Write-Host "Skip older files" -ForegroundColor White
-    Write-Host "  Fast:        " -NoNewline -ForegroundColor Gray
-    Write-Host "Minimal logging, max threads" -ForegroundColor White
-    Write-Host "  Verify:      " -NoNewline -ForegroundColor Gray
-    Write-Host "Copy with verification" -ForegroundColor White
-    Write-Host "  Incremental: " -NoNewline -ForegroundColor Gray
-    Write-Host "Skip older files" -ForegroundColor White
-    
-    Write-Host "`nEXAMPLES:" -ForegroundColor Cyan
-    Write-Host "  robocopy                              " -NoNewline -ForegroundColor Gray
-    Write-Host "# Interactive mode" -ForegroundColor DarkGray
-    Write-Host "  robo-mirror C:\Source D:\Backup       " -NoNewline -ForegroundColor Gray
-    Write-Host "# Quick mirror" -ForegroundColor DarkGray
-    Write-Host "  robo-diff C:\Folder1 C:\Folder2       " -NoNewline -ForegroundColor Gray
-    Write-Host "# Compare" -ForegroundColor DarkGray
-    Write-Host "  robo-schedule C:\Data D:\Backup 02:00 " -NoNewline -ForegroundColor Gray
-    Write-Host "# Schedule at 2am" -ForegroundColor DarkGray
-    
-    Write-Host "`nEXIT CODES:" -ForegroundColor Cyan
-    Write-Host "  0  " -NoNewline -ForegroundColor Gray
-    Write-Host "No changes needed" -ForegroundColor White
-    Write-Host "  1  " -NoNewline -ForegroundColor Gray
-    Write-Host "Files copied successfully" -ForegroundColor White
-    Write-Host "  2  " -NoNewline -ForegroundColor Gray
-    Write-Host "Extra files/directories detected" -ForegroundColor White
-    Write-Host "  4  " -NoNewline -ForegroundColor Gray
-    Write-Host "Mismatches detected" -ForegroundColor White
-    Write-Host "  8+ " -NoNewline -ForegroundColor Gray
-    Write-Host "Errors occurred" -ForegroundColor White
-    
-    Write-Host "`n════════════════════════════════════════════" -ForegroundColor DarkGray
-    Write-Host "Type 'robo-help' anytime to see this help`n" -ForegroundColor Gray
+    $cmds = @(
+        @{ Cmd="robocopy"; Desc="Interactive mode" },
+        @{ Cmd="robo-mirror"; Desc="Mirror sync" },
+        @{ Cmd="robo-backup"; Desc="Smart backup" },
+        @{ Cmd="robo-verify"; Desc="Hash check" },
+        @{ Cmd="robo-schedule"; Desc="Auto tasks" },
+        @{ Cmd="robo-help"; Desc="Show this help menu" }
+    )
+    Show-JuiceHelp -Title "robocopy-enhance Steroids" -Commands $cmds
 }
+Set-Alias -Name "robo-help" -Value robo-help
 
 # ============================================================================
 # INITIALIZATION

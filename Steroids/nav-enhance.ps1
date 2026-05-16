@@ -2,6 +2,11 @@
 # Enhanced navigation with zoxide + eza integration
 # Part of TheSecretJuice by mini-page
 
+if ($null -eq (Get-Command Show-JuiceHelp -ErrorAction SilentlyContinue)) {
+    $helperPath = Join-Path $PSScriptRoot "Core\Juice-Helpers.ps1"
+    if (Test-Path $helperPath) { . $helperPath }
+}
+
 # ============================================================================
 # ZOXIDE ENHANCED NAVIGATION
 # ============================================================================
@@ -331,56 +336,18 @@ function lst {
 # ============================================================================
 
 function nav-help {
-    Write-Host "`nNAV-ENHANCE COMMANDS" -ForegroundColor Magenta
-    Write-Host "════════════════════════════════════════════`n" -ForegroundColor DarkGray
-    
-    Write-Host "NAVIGATION:" -ForegroundColor Cyan
-    Write-Host "  zz [query]    " -NoNewline -ForegroundColor Green; Write-Host "Jump to directory and list" -ForegroundColor Gray
-    Write-Host "  zi            " -NoNewline -ForegroundColor Green; Write-Host "Interactive fuzzy jump with preview" -ForegroundColor Gray
-    Write-Host "  zc [query]    " -NoNewline -ForegroundColor Green; Write-Host "Jump and open in VSCode" -ForegroundColor Gray
-    Write-Host "  ze [query]    " -NoNewline -ForegroundColor Green; Write-Host "Jump and open in Explorer" -ForegroundColor Gray
-    Write-Host "  zn            " -NoNewline -ForegroundColor Green; Write-Host "Show numbered list, pick to jump" -ForegroundColor Gray
-    Write-Host "  zx            " -NoNewline -ForegroundColor Green; Write-Host "Jump with action menu" -ForegroundColor Gray
-    Write-Host "  z-            " -NoNewline -ForegroundColor Green; Write-Host "Go back to previous directory" -ForegroundColor Gray
-    Write-Host "  .. / ... / .... " -NoNewline -ForegroundColor Green; Write-Host " Navigate up 1/2/3 levels" -ForegroundColor Gray
-    
-    Write-Host "`nLISTING:" -ForegroundColor Cyan
-    Write-Host "  lb            " -NoNewline -ForegroundColor Green; Write-Host "Basic list with icons" -ForegroundColor Gray
-    Write-Host "  ll            " -NoNewline -ForegroundColor Green; Write-Host "Long format" -ForegroundColor Gray
-    Write-Host "  la            " -NoNewline -ForegroundColor Green; Write-Host "All files (including hidden)" -ForegroundColor Gray
-    Write-Host "  lt            " -NoNewline -ForegroundColor Green; Write-Host "Tree view (2 levels)" -ForegroundColor Gray
-    Write-Host "  ltt           " -NoNewline -ForegroundColor Green; Write-Host "Deep tree (4 levels)" -ForegroundColor Gray
-    Write-Host "  ld            " -NoNewline -ForegroundColor Green; Write-Host "Detailed view with git" -ForegroundColor Gray
-    
-    Write-Host "`nSORTING:" -ForegroundColor Cyan
-    Write-Host "  lz            " -NoNewline -ForegroundColor Green; Write-Host "Sort by size (largest first)" -ForegroundColor Gray
-    Write-Host "  lm            " -NoNewline -ForegroundColor Green; Write-Host "Sort by modified time" -ForegroundColor Gray
-    Write-Host "  lc            " -NoNewline -ForegroundColor Green; Write-Host "Sort by created time" -ForegroundColor Gray
-    
-    Write-Host "`nFILTERING:" -ForegroundColor Cyan
-    Write-Host "  ldo           " -NoNewline -ForegroundColor Green; Write-Host "Only directories" -ForegroundColor Gray
-    Write-Host "  lf            " -NoNewline -ForegroundColor Green; Write-Host "Only files" -ForegroundColor Gray
-    Write-Host "  lcode         " -NoNewline -ForegroundColor Green; Write-Host "Only code files" -ForegroundColor Gray
-    Write-Host "  lmedia        " -NoNewline -ForegroundColor Green; Write-Host "Only media files" -ForegroundColor Gray
-    Write-Host "  ldoc          " -NoNewline -ForegroundColor Green; Write-Host "Only documents" -ForegroundColor Gray
-    Write-Host "  lr            " -NoNewline -ForegroundColor Green; Write-Host "Recent files (24h)" -ForegroundColor Gray
-    Write-Host "  lbig          " -NoNewline -ForegroundColor Green; Write-Host "Large files (10MB+)" -ForegroundColor Gray
-    
-    Write-Host "`nBOOKMARKS:" -ForegroundColor Cyan
-    Write-Host "  bm-add [name] " -NoNewline -ForegroundColor Green; Write-Host "Bookmark current directory" -ForegroundColor Gray
-    Write-Host "  bm [name]     " -NoNewline -ForegroundColor Green; Write-Host "Jump to bookmark" -ForegroundColor Gray
-    Write-Host "  bm-list       " -NoNewline -ForegroundColor Green; Write-Host "Show all bookmarks" -ForegroundColor Gray
-    Write-Host "  bm-rm [name]  " -NoNewline -ForegroundColor Green; Write-Host "Remove bookmark" -ForegroundColor Gray
-    
-    Write-Host "`nUTILITIES:" -ForegroundColor Cyan
-    Write-Host "  pj [path]     " -NoNewline -ForegroundColor Green; Write-Host "Find git projects" -ForegroundColor Gray
-    Write-Host "  fn [pattern]  " -NoNewline -ForegroundColor Green; Write-Host "Find and navigate to folder" -ForegroundColor Gray
-    Write-Host "  lst           " -NoNewline -ForegroundColor Green; Write-Host "Show directory statistics" -ForegroundColor Gray
-    Write-Host "  lg            " -NoNewline -ForegroundColor Green; Write-Host "Git-focused view" -ForegroundColor Gray
-    
-    Write-Host "`n════════════════════════════════════════════" -ForegroundColor DarkGray
-    Write-Host "Type 'nav-help' anytime to see this help`n" -ForegroundColor Gray
+    $cmds = @(
+        @{ Cmd="zz"; Desc="Jump to dir" },
+        @{ Cmd="zi"; Desc="Fuzzy jump" },
+        @{ Cmd="ll"; Desc="Rich list" },
+        @{ Cmd="la"; Desc="Show all" },
+        @{ Cmd="bm-add"; Desc="Add bookmark" },
+        @{ Cmd="bm"; Desc="Jump to bookmark" },
+        @{ Cmd="nav-help"; Desc="Show this help menu" }
+    )
+    Show-JuiceHelp -Title "nav-enhance Steroids" -Commands $cmds
 }
+Set-Alias -Name "nav-help" -Value nav-help
 
 # Show welcome message on load
 Write-Host "OK. nav-enhance loaded! " -ForegroundColor Green -NoNewline
