@@ -1,9 +1,11 @@
 # Juice-Vault.ps1
-# Hardened OS Vault Integration for TheSecretJuice v3.0
-# Interfaces with Windows Credential Manager with Memory Zeroing.
+# Optimized OS Vault Integration for TheSecretJuice v3.0
+# Defer-load architecture: Compiles only on first use.
 
-if (-not ([System.Management.Automation.PSTypeName]"WinVault").Type) {
-    Add-Type -TypeDefinition @'
+function Initialize-JuiceVault {
+    if (-not ([System.Management.Automation.PSTypeName]"WinVault").Type) {
+        Write-Host "🔐 Initializing Secure Enclave..." -ForegroundColor Gray
+        Add-Type -TypeDefinition @'
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -35,6 +37,7 @@ public class WinVault {
     }
 }
 '@
+    }
 }
 
 function Set-JuiceVaultSecret {
@@ -43,13 +46,14 @@ function Set-JuiceVaultSecret {
         [Parameter(Mandatory)][SecureString]$SecureSecret
     )
     
+    Initialize-JuiceVault
+    
     $cred = New-Object WinVault+CREDENTIAL
-    $cred.Type = 1 # Generic
+    $cred.Type = 1 
     $cred.TargetName = "TheSecretJuice:$Target"
-    $cred.Persist = 2 # Local Machine
+    $cred.Persist = 2 
     $cred.UserName = $env:USERNAME
     
-    # HARDENED: Direct BSTR pointer from SecureString
     $bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($SecureSecret)
     try {
         $plain = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)
@@ -61,7 +65,6 @@ function Set-JuiceVaultSecret {
         
         return [WinVault]::CredWriteW([ref]$cred, 0)
     } finally {
-        # CRITICAL: Zero out the BSTR immediately
         [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
         if ($cred.CredentialBlob) { [Marshal]::FreeCoTaskMem($cred.CredentialBlob) }
     }
@@ -69,6 +72,8 @@ function Set-JuiceVaultSecret {
 
 function Get-JuiceVaultSecret {
     param([string]$Target)
+    
+    Initialize-JuiceVault
     
     $ptr = [IntPtr]::Zero
     $res = [WinVault]::CredReadW("TheSecretJuice:$Target", 1, 0, [ref]$ptr)
@@ -78,24 +83,11 @@ function Get-JuiceVaultSecret {
             $cred = [Marshal]::PtrToStructure($ptr, [WinVault+CREDENTIAL])
             $bytes = New-Object byte[] $cred.CredentialBlobSize
             [Marshal]::Copy($cred.CredentialBlob, $bytes, 0, $bytes.Length)
-            
-            # For backward compatibility, return as plain string but zero it if possible
             $secret = [Text.Encoding]::Unicode.GetString($bytes)
             return $secret
         } finally {
             [WinVault]::CredFree($ptr)
         }
-    }
-    return $null
-}
-
-function Get-JuiceVaultSecureString {
-    param([string]$Target)
-    
-    $plain = Get-JuiceVaultSecret -Target $Target
-    if ($plain) {
-        $ss = ConvertTo-SecureString $plain -AsPlainText -Force
-        return $ss
     }
     return $null
 }
