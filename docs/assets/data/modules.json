@@ -71,6 +71,42 @@
     "dependencies": []
   },
   {
+    "id": "acllock-enhance",
+    "name": "acllock-enhance",
+    "description": "Interactive ACL manager to lock/unlock files and folders.",
+    "path": "Steroids/acllock-enhance.ps1",
+    "category": "Security",
+    "icon": "fa-user-shield",
+    "commands": ["acllock", "acl", "lock", "acl-help"],
+    "dependencies": []
+  },
+  {
+    "id": "security-pack",
+    "name": "Security-Pack",
+    "description": "Professional-grade encryption and permission locking tools.",
+    "path": "Steroids/",
+    "category": "Security",
+    "icon": "fa-shield-alt",
+    "isPack": true,
+    "modules": [
+      { "name": "EFS Encryption", "path": "cipher-enhance.ps1", "commands": ["cipher"] },
+      { "name": "ACL Locking", "path": "acllock-enhance.ps1", "commands": ["lock", "acllock"] }
+    ],
+    "dependencies": []
+  },
+  {
+    "id": "highcontext-theme",
+    "name": "highContext Theme",
+    "description": "Premium Oh-My-Posh theme for maximum situational awareness.",
+    "path": "highContext.omp.json",
+    "category": "Visual",
+    "icon": "fa-palette",
+    "commands": [],
+    "dependencies": [
+      { "name": "oh-my-posh", "url": "https://ohmyposh.dev/" }
+    ]
+  },
+  {
     "id": "sys-pack",
     "name": "System-Pack",
     "description": "Maintenance, optimization, and hardware information.",
@@ -138,6 +174,7 @@
     "isPack": true,
     "modules": [
       { "name": "Profile", "path": "Profile-Management.ps1", "commands": ["profile"] },
+      { "name": "Master Profile", "path": "../../Microsoft.PowerShell_profile.ps1", "commands": ["Install-PwshModules", "Update-PwshModules", "Profile-Stats"] },
       { "name": "Master Help", "path": "Help-Summary.ps1", "commands": ["help", "juice-help"] },
       { "name": "Helpers", "path": "Juice-Helpers.ps1", "commands": [] }
     ],
