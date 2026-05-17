@@ -313,6 +313,48 @@ The profile hardcodes local Anthropic environment values and a `claude-mem` entr
 ### Potential Design Smell
 `Steroids/asllock-en3hance.ps1` contains top-level admin enforcement and an interactive TUI, while the profile dot-sources all `*-enhance.ps1` files. That combination is unusual and should be treated carefully if startup issues appear.
 
+## v3.0 Transition History
+
+### 🏁 Start of v3.0 Upgrade (May 17, 2026)
+- **Objective:** Move from monolithic script loading to a modular "Package Manager" style architecture.
+- **Key Features Planned:** 
+  - Micro-core (`juice` command).
+  - Intelligent discovery engine (suggestions for modern tools like `bat`, `ripgrep`).
+  - Zero-boot impact via background Runspaces.
+  - OS Vault integration for security.
+  - Local web dashboard for configuration.
+
+### ✅ Phase 1: Core & Discovery (Complete)
+- Initialized the micro-core (`juice` command) and implemented tool suggestion wrappers.
+- Refactored the Master Profile for lightweight delegation and enabled predictive terminal features.
+
+### ✅ Phase 2: Speed & Security (Complete)
+- Implemented background PowerShell Runspaces to offload steroid discovery, achieving near-zero boot lag.
+- Developed `Juice-Vault.ps1` for native integration with Windows Credential Manager.
+- Refactored security modules (`acllock`) to use the OS Vault, providing professional-grade, password-less (biometric-ready) security.
+
+### ✅ Phase 3: The Dashboard (Complete)
+- Created `Juice-Dashboard.ps1`, a lightweight PowerShell-based local web server.
+- Integrated `juice dashboard` command to launch the 'Secret Control Center' GUI.
+- Established the base for visual configuration and module management via the browser.
+
+### ✅ Phase 5: Pro-Fix Audit & Hardening (Complete)
+- **Memory Safety**: Fixed Runspace leaks in the background loader; implemented proper resource disposal.
+- **Security Hardening**: Closed the plaintext memory gap in the OS Vault; implemented `SecureString` handling and memory zeroing (BSTR zeroing) for all sensitive operations.
+- **Dashboard Security**: Secured the local web server with unique session tokens and mandatory query-parameter verification.
+- **UX Refinement**: Optimized the suggestion engine to show tips *before* command execution and added session-based suppression to avoid "suggestion fatigue."
+- **Deployment Reliability**: Refactored the installer to use absolute paths and robust error handling, ensuring a stable v3.0 rollout.
+
+## 🏁 Stable v3.0 Alpha Reached (May 17, 2026)
+"The Secret Juice" is now a modular, high-performance CLI Operating System. 
+**Key Achievements:**
+1. **Modular Core**: `juice` command manager.
+2. **Speed**: Zero-lag boot via PowerShell Runspaces.
+3. **Security**: Biometric-ready OS Vault integration (Windows Credential Manager).
+4. **Intelligence**: Intelligent command discovery/suggestions with session suppression.
+5. **Dashboard**: Secured local web GUI (Session Token protected).
+6. **Robust Installer**: Safe, path-aware, and absolute-reliability deployment.
+
 ## What Matters Most For Future Work
 
 If changing this workspace, prioritize files in this order:

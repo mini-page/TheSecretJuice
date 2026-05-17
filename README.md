@@ -8,6 +8,18 @@ Transform boring CLI tools into interactive, colorful, user-friendly experiences
 ![Platform](https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20macOS-green)
 ![License](https://img.shields.io/badge/License-MIT-yellow)
 
+## 🚀 The Secret Juice v3.0 (Alpha)
+
+The next major evolution is here. We've moved from a collection of scripts to a **modular CLI Operating System**.
+
+- **🧩 Micro-Core**: A new lightweight `juice` manager that handles everything.
+- **🧠 Discovery Engine**: Intelligent suggestions for modern tools (e.g., `cat` ➜ `bat`, `grep` ➜ `ripgrep`).
+- **⚡ Zero-Lag Boot**: Background Runspaces ensure your terminal opens instantly.
+- **🛡️ OS Vault**: Native integration with Windows Credential Manager for biometric security.
+- **🎨 Control Center**: Run `juice dashboard` to manage your ecosystem via a local web GUI.
+
+---
+
 ## ✨ What You Get
 
 - 🎨 **Interactive menus** - No more memorizing cryptic flags.

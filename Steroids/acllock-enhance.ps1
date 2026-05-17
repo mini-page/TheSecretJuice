@@ -26,53 +26,60 @@ if (-not (Test-Path $acllockBackupDir)) {
 }
 
 # ============================================================================
-# PASSWORD MANAGEMENT
+# PASSWORD MANAGEMENT (v3.0 Hardened Vault)
 # ============================================================================
-function Get-AclHash {
-    param([SecureString]$Secure)
-    $bstr = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($Secure)
-    try {
-        $plain = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($bstr)
-        $bytes = [Text.Encoding]::UTF8.GetBytes($plain)
-        $hash  = [Security.Cryptography.SHA256]::Create().ComputeHash($bytes)
-        return ([BitConverter]::ToString($hash) -replace '-', '')
-    }
-    finally {
-        [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($bstr)
-    }
-}
-
 function Ensure-AclPassword {
-    if (-not (Test-Path $acllockAuthFile)) {
+    $existing = Get-JuiceSecret -Target "AclLock"
+    if ($null -eq $existing) {
         Write-JuiceBanner -Title "Setup ACL Password"
         Write-Host "  Password is required for lock/unlock operations." -ForegroundColor Cyan
+        Write-Host "  (Securely stored in Windows Credential Manager)" -ForegroundColor Gray
         
         $p1 = Read-Host "  New password" -AsSecureString
         $p2 = Read-Host "  Confirm password" -AsSecureString
 
-        if ((Get-AclHash $p1) -ne (Get-AclHash $p2)) {
-            Write-Host "  ❌ Passwords do not match!" -ForegroundColor Red
-            return $false
-        }
+        # Use hardened Vault interface (passes SecureString directly)
+        $ptr1 = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($p1)
+        $ptr2 = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($p2)
+        $plain1 = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($ptr1)
+        $plain2 = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($ptr2)
 
-        Get-AclHash $p1 | Set-Content $acllockAuthFile -Force
-        Write-Host "  ✅ Password set successfully!`n" -ForegroundColor Green
+        try {
+            if ($plain1 -ne $plain2) {
+                Write-Host "  ❌ Passwords do not match!" -ForegroundColor Red
+                return $false
+            }
+
+            Set-JuiceSecret -Target "AclLock" -Secret $p1
+            Write-Host "  ✅ Password secured in OS Vault!`n" -ForegroundColor Green
+        } finally {
+            # Zero out local plain text copies immediately
+            [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ptr1)
+            [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ptr2)
+        }
     }
     return $true
 }
 
 function Verify-AclPassword {
-    if (-not (Test-Path $acllockAuthFile)) {
+    $stored = Get-JuiceSecret -Target "AclLock"
+    if ($null -eq $stored) {
         if (-not (Ensure-AclPassword)) { return $false }
+        $stored = Get-JuiceSecret -Target "AclLock"
     }
     
-    $stored = Get-Content $acllockAuthFile
     $input  = Read-Host "  Enter Password" -AsSecureString
+    $ptr    = [Runtime.InteropServices.Marshal]::SecureStringToBSTR($input)
+    $plain  = [Runtime.InteropServices.Marshal]::PtrToStringBSTR($ptr)
 
-    if ((Get-AclHash $input) -ne $stored) {
-        Write-Host "  ❌ Invalid password!" -ForegroundColor Red
-        Start-Sleep -Milliseconds 800
-        return $false
+    try {
+        if ($plain -ne $stored) {
+            Write-Host "  ❌ Invalid password!" -ForegroundColor Red
+            Start-Sleep -Milliseconds 800
+            return $false
+        }
+    } finally {
+        [Runtime.InteropServices.Marshal]::ZeroFreeBSTR($ptr)
     }
     return $true
 }

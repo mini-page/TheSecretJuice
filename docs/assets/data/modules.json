@@ -1,5 +1,17 @@
 [
   {
+    "id": "v3-core",
+    "name": "Juice Core (v3.0 Alpha)",
+    "description": "The new modular foundation. Features micro-routing, intelligent tool suggestions, and predictive history.",
+    "path": "Steroids/Core/Juice-Core.ps1",
+    "category": "Core",
+    "icon": "fa-microchip",
+    "commands": ["juice", "juice-help"],
+    "dependencies": [
+      { "name": "PSReadLine", "url": "https://github.com/PowerShell/PSReadLine" }
+    ]
+  },
+  {
     "id": "yt-dlp-enhance",
     "name": "yt-dlp-enhance",
     "description": "Interactive media downloader with cookie support and VLC streaming.",
