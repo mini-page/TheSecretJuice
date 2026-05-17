@@ -115,13 +115,22 @@ function Get-CachedFileList {
 # Core Initialization
 # ============================================
 
-# oh-my-posh (theme)
-try {
-    oh-my-posh init pwsh --config "$env:USERPROFILE\Documents\PowerShell\highContext.omp.json" | Invoke-Expression
-    __LogOk "oh-my-posh initialized"
+# Define project root dynamically if possible, or use standard install path
+$JuiceRoot = "$HOME\Documents\PowerShell\Scripts\TheSecretJuice"
+if (-not (Test-Path $JuiceRoot)) {
+    $JuiceRoot = Split-Path $PSScriptRoot -Parent
 }
-catch {
-    __LogWarn "oh-my-posh not loaded"
+
+# oh-my-posh (theme)
+$ThemePath = Join-Path $JuiceRoot "highContext.omp.json"
+if (Test-Path $ThemePath) {
+    try {
+        oh-my-posh init pwsh --config $ThemePath | Invoke-Expression
+        __LogOk "oh-my-posh initialized with highContext theme"
+    }
+    catch {
+        __LogWarn "oh-my-posh not loaded"
+    }
 }
 
 # zoxide

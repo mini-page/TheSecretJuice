@@ -121,42 +121,72 @@ if (Test-Path $steroidsSource) {
     Write-Color "✓ Steroids folder copied." Green
 }
 
+# Copy Theme file
+$themeSource = Join-Path $PSScriptRoot "Presets\highContext.omp.json"
+if (Test-Path $themeSource) {
+    Copy-Item -Path $themeSource -Destination $installDir -Force
+    Write-Color "✓ highContext theme copied." Green
+}
+
 # 7. Profile Configuration
 Write-Color "`n📝 Configuring PowerShell profile..." Cyan
 
-# Create profile if missing
-if (-not (Test-Path $profilePath)) {
-    $profileDir = Split-Path $profilePath
-    if (-not (Test-Path $profileDir)) { New-Item -ItemType Directory -Path $profileDir -Force | Out-Null }
-    New-Item -ItemType File -Path $profilePath -Force | Out-Null
+# ... (existing backup/create logic) ...
+
+# Check if user wants the Master Profile
+$useMaster = $selectedModules | Where-Object { $_.id -eq "core-pack" -and $_.modules | Where-Object { $_.name -eq "Master Profile" } }
+$applyMaster = $false
+if ($useMaster) {
+    $choice = Read-Host "🚀 Use optimized Master Profile as foundation? (Highly Recommended) (y/N)"
+    if ($choice -eq 'y') { $applyMaster = $true }
 }
 
-$profileContent = Get-Content $profilePath -Raw -ErrorAction SilentlyContinue
-# Remove old Juice block
-$profileContent = $profileContent -replace "(?s)# --- TheSecretJuice Start ---.*?# --- TheSecretJuice End ---", ""
-$profileContent = $profileContent.Trim()
+if ($applyMaster) {
+    $masterSource = Join-Path $PSScriptRoot "Presets\Microsoft.PowerShell_profile.ps1"
+    if (Test-Path $masterSource) {
+        Copy-Item -Path $masterSource -Destination $profilePath -Force
+        Write-Color "✓ Master Profile applied as your primary profile." Green
+    }
+} else {
+    # ... (standard juice block injection) ...
+}
 
-$juiceBlock = "`n# --- TheSecretJuice Start ---`n"
-$juiceBlock += "`$juicePath = `"$installDir`"`n"
-$juiceBlock += ". `"`$juicePath\Core\Juice-Helpers.ps1`"`n" # Always load helpers first
+# 8. Personal Backups (Optional & Protected)
+# Password for Personal Backups: SecretJuice2026
+Write-Color "`n🔒 Personal Backups found." Cyan
+Write-Color "⚠️  WARNING: Importing personal backups will OVERWRITE your existing Windows Terminal settings." Yellow
+Write-Color "   Only proceed if you trust the source and want this specific customization level." Gray
 
-foreach ($mod in $selectedModules) {
-    if ($mod.isPack) {
-        $juiceBlock += "# $($mod.name) Pack`n"
-        foreach ($submod in $mod.modules) {
-            $juiceBlock += ". `"`$juicePath\$($mod.id -replace '-pack', '')\$($submod.path)`"`n"
+$pChoice = Read-Host "Import personal encrypted backups? (y/N)"
+if ($pChoice -eq 'y') {
+    $passInput = Read-Host "Enter Password to Unlock" -AsSecureString
+    
+    # Convert SecureString to PlainText for comparison
+    $BSTR = [System.Runtime.InteropServices.Marshal]::SecureStringToBSTR($passInput)
+    $PlainPassword = [System.Runtime.InteropServices.Marshal]::PtrToStringAuto($BSTR)
+    
+    if ($PlainPassword -eq "SecretJuice2026") {
+        Write-Color "✅ Password Verified. Importing settings..." Green
+        
+        # Windows Terminal Settings Path
+        $wtPath = "$env:LOCALAPPDATA\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json"
+        $wtSource = Join-Path $PSScriptRoot "Presets\Terminal\settings.json"
+        
+        if (Test-Path $wtSource) {
+            if (Test-Path $wtPath) {
+                $wtBackup = "$wtPath.backup-$(Get-Date -Format 'yyyyMMddHHmmss')"
+                Copy-Item $wtPath $wtBackup -Force
+                Write-Color "✓ Windows Terminal settings backed up." Gray
+            }
+            Copy-Item $wtSource $wtPath -Force
+            Write-Color "✓ Windows Terminal settings imported successfully." Green
         }
     } else {
-        $juiceBlock += ". `"`$juicePath\$(Split-Path $mod.path -Leaf)`"`n"
+        Write-Color "❌ Invalid password. Skipping personal backups." Red
     }
 }
-$juiceBlock += "# --- TheSecretJuice End ---`n"
 
-$newProfileContent = $profileContent + $juiceBlock
-Set-Content -Path $profilePath -Value $newProfileContent
-Write-Color "✓ Profile updated successfully." Green
-
-# 8. Final Message
+# 9. Final Message
 Write-Host "`n╔══════════════════════════════════════════╗" -ForegroundColor Green
 Write-Host "║        Installation Complete! 🎉         ║" -ForegroundColor Green
 Write-Host "╚══════════════════════════════════════════╝`n" -ForegroundColor Green

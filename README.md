@@ -68,6 +68,7 @@ Explore our detailed guides and project reports:
 
 ### 🎨 Visual Enhancements (Optional)
 - **[highContext Theme](docs/modules/theme-highcontext.md)** - The ultimate Oh-My-Posh theme for a "CLI 2030" look.
+- **Windows Terminal Settings** - Premium JSON configuration for deep UI customization (Requires Password).
 
 ### 📦 Steroid Packs
 - **[Security Pack](docs/packs/Security-Pack.md)** - Encryption and permission locking tools.
