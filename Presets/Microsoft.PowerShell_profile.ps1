@@ -82,11 +82,13 @@ try {
 $modules = @('Terminal-Icons', 'posh-git', 'PSFzf', 'PSReadLine')
 foreach ($m in $modules) { Import-ModuleSafe $m | Out-Null }
 
-# Load Steroids
+# Load Steroids (Recursive Discovery)
 $SteroidsPath = Join-Path $JuiceRoot "Steroids"
-$steroidFiles = Get-ChildItem -Path $SteroidsPath -Filter "*-enhance.ps1" -File
-foreach ($f in $steroidFiles) {
-    try { . $f.FullName *>$null; __LogOk "Steroid: $($f.BaseName)" } catch { }
+if (Test-Path $SteroidsPath) {
+    $steroidFiles = Get-ChildItem -Path $SteroidsPath -Filter "*-enhance.ps1" -File -Recurse
+    foreach ($f in $steroidFiles) {
+        try { . $f.FullName *>$null; __LogOk "Steroid: $($f.BaseName)" } catch { }
+    }
 }
 
 # ============================================

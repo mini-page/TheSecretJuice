@@ -15,7 +15,7 @@
     "id": "yt-dlp-enhance",
     "name": "yt-dlp-enhance",
     "description": "Interactive media downloader with cookie support and VLC streaming.",
-    "path": "Steroids/yt-dlp-enhance.ps1",
+    "path": "Steroids/App/yt-dlp-enhance.ps1",
     "category": "Media",
     "icon": "fa-video",
     "commands": ["yt-dlp", "yt-video", "yt-audio", "yt-help"],
@@ -28,7 +28,7 @@
     "id": "nav-enhance",
     "name": "nav-enhance",
     "description": "Supercharged navigation and directory listing.",
-    "path": "Steroids/nav-enhance.ps1",
+    "path": "Steroids/Nav/nav-enhance.ps1",
     "category": "Navigation",
     "icon": "fa-compass",
     "commands": ["zz", "zi", "ll", "la", "nav-help"],
@@ -41,7 +41,7 @@
     "id": "robocopy-enhance",
     "name": "robocopy-enhance",
     "description": "Smart file copying with presets and scheduling.",
-    "path": "Steroids/robocopy-enhance.ps1",
+    "path": "Steroids/Sys/robocopy-enhance.ps1",
     "category": "File Management",
     "icon": "fa-copy",
     "commands": ["robocopy", "robo-mirror", "robo-backup", "robo-help"],
@@ -51,7 +51,7 @@
     "id": "fzf-enhance",
     "name": "fzf-enhance",
     "description": "Fuzzy finder with interactive previews and process killer.",
-    "path": "Steroids/fzf-enhance.ps1",
+    "path": "Steroids/Search/fzf-enhance.ps1",
     "category": "Utilities",
     "icon": "fa-search",
     "commands": ["fz", "fzf-file", "fzf-help"],
@@ -64,7 +64,7 @@
     "id": "git-enhance",
     "name": "git-enhance",
     "description": "Human-friendly Git with conventional commit wizard.",
-    "path": "Steroids/git-enhance.ps1",
+    "path": "Steroids/Dev/git-enhance.ps1",
     "category": "Development",
     "icon": "fa-code-branch",
     "commands": ["g", "g-status", "g-log", "git-help"],
@@ -76,7 +76,7 @@
     "id": "cipher-enhance",
     "name": "cipher-enhance",
     "description": "Easy file and folder encryption using Windows EFS.",
-    "path": "Steroids/cipher-enhance.ps1",
+    "path": "Steroids/Security/cipher-enhance.ps1",
     "category": "Security",
     "icon": "fa-lock",
     "commands": ["cipher", "cipher-encrypt", "cipher-decrypt", "cipher-help"],
@@ -86,7 +86,7 @@
     "id": "acllock-enhance",
     "name": "acllock-enhance",
     "description": "Interactive ACL manager to lock/unlock files and folders.",
-    "path": "Steroids/acllock-enhance.ps1",
+    "path": "Steroids/Security/acllock-enhance.ps1",
     "category": "Security",
     "icon": "fa-user-shield",
     "commands": ["acllock", "acl", "lock", "acl-help"],
@@ -96,7 +96,7 @@
     "id": "security-pack",
     "name": "Security-Pack",
     "description": "Professional-grade encryption and permission locking tools.",
-    "path": "Steroids/",
+    "path": "Steroids/Security/",
     "category": "Security",
     "icon": "fa-shield-alt",
     "isPack": true,
@@ -130,7 +130,8 @@
       { "name": "Maintenance", "path": "Sys-Maintanance.ps1", "commands": ["optimize"] },
       { "name": "System Info", "path": "Sys-Info.ps1", "commands": ["sys-info"] },
       { "name": "Cleanup", "path": "Clean-OldFiles.ps1", "commands": ["clean-files"] },
-      { "name": "Specs", "path": "Restart-specs.ps1", "commands": ["restart-specs"] }
+      { "name": "Specs", "path": "Restart-specs.ps1", "commands": ["restart-specs"] },
+      { "name": "Sync Tool", "path": "robocopy-enhance.ps1", "commands": ["robocopy"] }
     ],
     "dependencies": []
   },
@@ -145,7 +146,8 @@
     "modules": [
       { "name": "Tool Info", "path": "Dev-ToolsInfo.ps1", "commands": ["tools-info"] },
       { "name": "Man Pages", "path": "Man-Pwsh.ps1", "commands": ["man-pwsh"] },
-      { "name": "Statistics", "path": "Z-Statistics.ps1", "commands": ["z-stats"] }
+      { "name": "Statistics", "path": "Z-Statistics.ps1", "commands": ["z-stats"] },
+      { "name": "Git Wizard", "path": "git-enhance.ps1", "commands": ["g"] }
     ],
     "dependencies": []
   },
@@ -172,7 +174,8 @@
     "isPack": true,
     "modules": [
       { "name": "App Manager", "path": "Update-Apps.ps1", "commands": ["update-apps"] },
-      { "name": "App Info", "path": "Get-AppsInfo.ps1", "commands": ["get-apps"] }
+      { "name": "App Info", "path": "Get-AppsInfo.ps1", "commands": ["get-apps"] },
+      { "name": "Media Downloader", "path": "yt-dlp-enhance.ps1", "commands": ["yt-dlp"] }
     ],
     "dependencies": []
   },
@@ -185,10 +188,12 @@
     "icon": "fa-cog",
     "isPack": true,
     "modules": [
+      { "name": "Juice Core", "path": "Juice-Core.ps1", "commands": ["juice"] },
       { "name": "Profile", "path": "Profile-Management.ps1", "commands": ["profile"] },
       { "name": "Master Profile", "path": "../../Microsoft.PowerShell_profile.ps1", "commands": ["Install-PwshModules", "Update-PwshModules", "Profile-Stats"] },
       { "name": "Master Help", "path": "Help-Summary.ps1", "commands": ["help", "juice-help"] },
-      { "name": "Helpers", "path": "Juice-Helpers.ps1", "commands": [] }
+      { "name": "Helpers", "path": "Juice-Helpers.ps1", "commands": [] },
+      { "name": "Vault", "path": "Juice-Vault.ps1", "commands": [] }
     ],
     "dependencies": []
   }
