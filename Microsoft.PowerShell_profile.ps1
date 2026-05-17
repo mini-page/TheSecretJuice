@@ -199,34 +199,6 @@ catch {
 }
 
 # ============================================
-# EasyModules Helpers (safe import)
-# ============================================
-$helpersPath = "$HOME\Documents\PowerShell\EasyModules\Helpers\helpers.psm1"
-if (Test-Path $helpersPath) {
-    try {
-        Import-Module $helpersPath -Force -ErrorAction Stop | Out-Null
-        __LogOk "Helpers loaded"
-    }
-    catch {
-        __LogErr "Helpers failed: $($_.Exception.Message)"
-    }
-}
-else {
-    __LogWarn "Helpers not found: $helpersPath"
-}
-
-# ============================================
-# Load Custom Functions (cached list + silent dot-source)
-# ============================================
-$easyFuncsPath = "$env:USERPROFILE\Documents\PowerShell\EasyModules"
-$easyCache = "$env:USERPROFILE\Documents\PowerShell\.cache_easymodules.json"
-
-$easyFiles = Get-CachedFileList -Folder $easyFuncsPath -Filter "*.ps1" -CacheFile $easyCache
-foreach ($f in $easyFiles) {
-    try { . $f *>$null } catch { }
-}
-
-# ============================================
 # Steroids (cached list + silent dot-source)
 # ============================================
 $SteroidsPath = "$HOME\Documents\PowerShell\Steroids"
@@ -313,7 +285,3 @@ if ($global:PROFILE_DEBUG) {
     $elapsed = (Get-Date) - $__ProfileStart
     Write-Host "Profile load time: $([math]::Round($elapsed.TotalMilliseconds,2)) ms" -ForegroundColor Cyan
 }
-$env:ANTHROPIC_BASE_URL = 'http://localhost:8080'
-$env:ANTHROPIC_AUTH_TOKEN = 'test'
-
-function claude-mem { & "C:\Users\umang\.bun\bin\bun.exe" "C:\Users\umang\.claude\plugins\cache\thedotmack\claude-mem\10.6.2\scripts\worker-service.cjs" $args }
