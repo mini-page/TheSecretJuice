@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <meta name="description" content="TheSecretJuice Documentation - Read detailed guides, commands, and installation instructions for your favorite CLI steroids.">
+  
+  <title>Documentation - TheSecretJuice</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/components.css">
+  <link rel="stylesheet" href="assets/css/scrollbar.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💉</text></svg>">
+  
+  <!-- Marked.js for Markdown parsing -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  
+  <style>
+    /* Styling for the rendered markdown content */
+    .markdown-body {
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
+      line-height: 1.6;
+    }
+    .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4 {
+      margin-top: 24px;
+      margin-bottom: 16px;
+      font-weight: 600;
+      line-height: 1.25;
+      color: #fff;
+    }
+    .markdown-body h1 {
+      font-size: 2.5em;
+      padding-bottom: 0.3em;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(45deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .markdown-body h2 {
+      font-size: 1.75em;
+      padding-bottom: 0.3em;
+      border-bottom: 1px solid var(--border);
+    }
+    .markdown-body h3 { font-size: 1.5em; }
+    .markdown-body p { margin-top: 0; margin-bottom: 16px; }
+    .markdown-body a { color: var(--primary); text-decoration: none; }
+    .markdown-body a:hover { text-decoration: underline; }
+    .markdown-body code {
+      padding: 0.2em 0.4em;
+      margin: 0;
+      font-size: 85%;
+      background-color: rgba(255,255,255,0.1);
+      border-radius: 6px;
+      color: var(--accent);
+    }
+    .markdown-body pre {
+      padding: 16px;
+      overflow: auto;
+      font-size: 85%;
+      line-height: 1.45;
+      background-color: #0d1117;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+    }
+    .markdown-body pre code {
+      display: inline;
+      max-width: auto;
+      padding: 0;
+      margin: 0;
+      overflow: visible;
+      line-height: inherit;
+      word-wrap: normal;
+      background-color: transparent;
+      border: 0;
+      color: #c9d1d9;
+    }
+    .markdown-body ul, .markdown-body ol {
+      padding-left: 2em;
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+    .markdown-body li { margin-top: 0.25em; }
+    .markdown-body blockquote {
+      padding: 0 1em;
+      color: var(--text-dim);
+      border-left: 0.25em solid var(--primary);
+      margin-bottom: 16px;
+      background: rgba(255,255,255,0.02);
+    }
+    .markdown-body table {
+      display: block;
+      width: 100%;
+      width: max-content;
+      max-width: 100%;
+      overflow: auto;
+      margin-top: 0;
+      margin-bottom: 16px;
+      border-spacing: 0;
+      border-collapse: collapse;
+    }
+    .markdown-body table th, .markdown-body table td {
+      padding: 6px 13px;
+      border: 1px solid var(--border);
+    }
+    .markdown-body table tr {
+      background-color: rgba(255,255,255,0.02);
+      border-top: 1px solid var(--border);
+    }
+    .markdown-body table tr:nth-child(2n) {
+      background-color: rgba(255,255,255,0.05);
+    }
+    .markdown-body hr {
+      height: 0.25em;
+      padding: 0;
+      margin: 24px 0;
+      background-color: var(--border);
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar">
+    <div class="navbar-container">
+      <a href="index.html" class="navbar-brand">
+        <span class="navbar-icon">💉</span>
+        <span class="gradient-text">TheSecretJuice</span>
+      </a>
+      <ul class="navbar-nav">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="modules.html">Modules</a></li>
+        <li><a href="installation.html">Installation</a></li>
+        <li><a href="contribute.html">Contribute</a></li>
+        <li><a href="https://github.com/mini-page/TheSecretJuice" target="_blank">
+          <i class="fab fa-github"></i> GitHub
+        </a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div style="max-width: 1000px; margin: 0 auto; padding: 4rem 2rem;">
+    <a href="modules.html" class="btn btn-outline" style="margin-bottom: 2rem; display: inline-block;">
+      <i class="fas fa-arrow-left"></i> Back to Modules
+    </a>
+    
+    <div class="glass" style="padding: 3rem; border-radius: 16px;" id="docContainer">
+      <div style="text-align: center; padding: 4rem;">
+        <i class="fas fa-spinner fa-spin" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+        <h3 style="color: var(--text);">Loading Documentation...</h3>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p class="footer-copyright">© 2025 TheSecretJuice. MIT License.</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/security.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      let moduleName = urlParams.get('name');
+      let type = urlParams.get('type') || 'module';
+      
+      const container = document.getElementById('docContainer');
+      
+      if (!moduleName) {
+        container.innerHTML = `
+          <div style="text-align: center;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 3rem; color: var(--error); margin-bottom: 1rem;"></i>
+            <h2>Module Not Specified</h2>
+            <p>Please select a module from the <a href="modules.html" style="color:var(--primary)">Modules Page</a>.</p>
+          </div>
+        `;
+        return;
+      }
+      
+      // Sanitize input
+      moduleName = moduleName.replace(/[^a-zA-Z0-9-]/g, '');
+      
+      let filePath = '';
+      if (type === 'pack' || moduleName.toLowerCase().includes('pack')) {
+        filePath = `packs/${moduleName}.md`;
+      } else {
+        filePath = `modules/${moduleName}.md`;
+      }
+
+      try {
+        const response = await fetch(filePath);
+        if (!response.ok) {
+          throw new Error(`Failed to load documentation for ${moduleName} (Status: ${response.status})`);
+        }
+        
+        const markdown = await response.text();
+        
+        // Parse markdown using marked.js
+        const htmlContent = marked.parse(markdown);
+        
+        container.innerHTML = `<div class="markdown-body fade-in">${htmlContent}</div>`;
+        document.title = `${moduleName} Docs - TheSecretJuice`;
+        
+      } catch (error) {
+        console.error(error);
+        container.innerHTML = `
+          <div style="text-align: center;">
+            <i class="fas fa-file-excel" style="font-size: 3rem; color: var(--error); margin-bottom: 1rem;"></i>
+            <h2>Documentation Not Found</h2>
+            <p style="color: var(--text-dim);">Could not load documentation for <strong>${moduleName}</strong>.</p>
+            <p style="color: var(--text-dimmer); margin-top: 1rem;">Error details: ${error.message}</p>
+            <p style="margin-top: 2rem;">
+              <a href="https://github.com/mini-page/TheSecretJuice/tree/main/docs" target="_blank" class="btn btn-outline">
+                <i class="fab fa-github"></i> View Raw on GitHub
+              </a>
+            </p>
+          </div>
+        `;
+      }
+    });
+  </script>
+</body>
+</html>

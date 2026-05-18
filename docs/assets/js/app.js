@@ -132,9 +132,7 @@ function displayAllModules() {
 
 function navigateToModule(moduleName, isPack = false) {
   // Sanitize module name before navigation
-  const safeName = typeof sanitizeAttribute !== 'undefined'
-    ? sanitizeAttribute(moduleName)
-    : moduleName.replace(/['"<>&]/g, '');
+  const safeName = moduleName.replace(/['"<>&]/g, '');
   const typeParam = isPack ? '&type=pack' : '&type=module';
   window.location.href = `module.html?name=${encodeURIComponent(safeName)}${typeParam}`;
 }
